@@ -104,6 +104,9 @@
   :defer t
   :config (temp-buffer-resize-mode))
 
+(use-package hl-todo
+  :config (global-hl-todo-mode))
+
 (progn ;    `isearch'
   (setq isearch-allow-scroll t))
 
