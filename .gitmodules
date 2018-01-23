@@ -52,6 +52,9 @@
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
+[submodule "paren-face"]
+	path = lib/paren-face
+	url = git@github.com:tarsius/paren-face.git
 [submodule "undo-tree"]
 	path = lib/undo-tree
 	url = http://www.dr-qubit.org/git/undo-tree.git
