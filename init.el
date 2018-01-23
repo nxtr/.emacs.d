@@ -199,6 +199,10 @@
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
+(use-package ws-butler
+  :init
+  (add-hook 'prog-mode-hook #'ws-butler-mode))
+
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
