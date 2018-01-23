@@ -93,6 +93,9 @@
                       (interactive)
                       (eshell t)))))
 
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
+
 (use-package fill-column-indicator
   :config
   (setq fci-rule-width 2)

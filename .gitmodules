@@ -27,6 +27,9 @@
 [submodule "epkg"]
 	path = lib/epkg
 	url = git@github.com:emacscollective/epkg.git
+[submodule "exec-path-from-shell"]
+	path = lib/exec-path-from-shell
+	url = git@github.com:purcell/exec-path-from-shell.git
 [submodule "fill-column-indicator"]
 	path = lib/fill-column-indicator
 	url = git@github.com:alpaker/Fill-Column-Indicator.git
