@@ -69,6 +69,10 @@
 
 ;;; Long tail
 
+(use-package ace-window
+  :demand t
+  :bind ("M-o" . ace-window))
+
 (use-package avy
   :init (avy-setup-default)
   :bind (("C-:"     . avy-goto-char)
