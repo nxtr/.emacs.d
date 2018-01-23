@@ -69,6 +69,16 @@
 
 ;;; Long tail
 
+(use-package avy
+  :init (avy-setup-default)
+  :bind (("C-:"     . avy-goto-char)
+         ("C-'"     . avy-goto-char-timer)
+         ;; ("C-'"     . avy-goto-char-2)
+         ("M-g g"   . avy-goto-line)
+         ("M-g w"   . avy-goto-word-1)
+         ("M-g e"   . avy-goto-word-0)
+         ("C-c C-j" . avy-resume)))
+
 (use-package dash
   :config (dash-enable-font-lock))
 
