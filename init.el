@@ -110,6 +110,9 @@
 (use-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
 
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)))
+
 (use-package fill-column-indicator
   :config
   (setq fci-rule-width 2)
