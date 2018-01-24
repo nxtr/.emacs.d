@@ -156,6 +156,14 @@
   :defer t
   :config (setq Man-width 80))
 
+(use-package multiple-cursors
+  :bind (("M-RET"   . mc/edit-lines)
+         ("C-<"     . mc/mark-previous-like-this)
+         ("C->"     . mc/mark-next-like-this)
+         ("C-M-<"   . mc/unmark-next-like-this)
+         ("C-M->"   . mc/unmark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
 (use-package no-littering
   :demand t
   :config

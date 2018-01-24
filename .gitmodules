@@ -58,6 +58,9 @@
 [submodule "magit-popup"]
 	path = lib/magit-popup
 	url = git@github.com:magit/magit-popup.git
+[submodule "multiple-cursors"]
+	path = lib/multiple-cursors
+	url = git@github.com:magnars/multiple-cursors.el.git
 [submodule "no-littering"]
 	path = lib/no-littering
 	url = git@github.com:emacscollective/no-littering.git
