@@ -51,6 +51,9 @@
 [submodule "hl-todo"]
 	path = lib/hl-todo
 	url = git@github.com:tarsius/hl-todo.git
+[submodule "hydra"]
+	path = lib/hydra
+	url = git@github.com:abo-abo/hydra.git
 [submodule "magit"]
 	path = lib/magit
 	url = git@github.com:magit/magit.git
