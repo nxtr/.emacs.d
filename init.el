@@ -178,6 +178,10 @@
 (use-package paren-face
   :config (global-paren-face-mode))
 
+(use-package pdf-tools
+  :demand t
+  :config (pdf-tools-install))
+
 (use-package prog-mode
   :config (global-prettify-symbols-mode)
   (defun indicate-buffer-boundaries-left ()

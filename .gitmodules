@@ -67,9 +67,15 @@
 [submodule "paren-face"]
 	path = lib/paren-face
 	url = git@github.com:tarsius/paren-face.git
+[submodule "pdf-tools"]
+	path = lib/pdf-tools
+	url = git@github.com:politza/pdf-tools.git
 [submodule "rainbow-mode"]
 	path = lib/rainbow-mode
 	url = git@github.com:emacsmirror/rainbow-mode.git
+[submodule "tablist"]
+	path = lib/tablist
+	url = git@github.com:politza/tablist.git
 [submodule "undo-tree"]
 	path = lib/undo-tree
 	url = http://www.dr-qubit.org/git/undo-tree.git
