@@ -86,6 +86,13 @@
   :when (version< "25" emacs-version)
   :config (global-eldoc-mode))
 
+(use-package eshell
+  :bind (("C-x m" . eshell)
+         ;; New eshell
+         ("C-x M" . (lambda ()
+                      (interactive)
+                      (eshell t)))))
+
 (use-package help
   :defer t
   :config (temp-buffer-resize-mode))
