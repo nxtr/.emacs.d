@@ -237,6 +237,9 @@
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
+(use-package which-key
+  :config (which-key-mode))
+
 (use-package ws-butler
   :init
   (add-hook 'prog-mode-hook #'ws-butler-mode))
