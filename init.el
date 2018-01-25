@@ -149,6 +149,12 @@
 (use-package simple
   :config (column-number-mode))
 
+(use-package term
+  :defer t
+  :config
+  (require 'with-editor)
+  (add-hook 'term-exec-hook 'with-editor-export-editor))
+
 (progn ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
 
