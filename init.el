@@ -106,6 +106,10 @@
   :bind (("C-x g"   . magit-status)
          ("C-x M-g" . magit-dispatch-popup))
   :config
+  ;; Window management
+  (setq magit-display-buffer-function
+        'magit-display-buffer-fullframe-status-topleft-v1)
+  ;; Status buffer settings
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
