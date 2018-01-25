@@ -139,6 +139,13 @@
   :when (version< "25" emacs-version)
   :config (save-place-mode))
 
+(use-package shell
+  :defer t
+  :bind ("C-x M-m" . shell)
+  :config
+  (require 'with-editor)
+  (add-hook 'shell-mode-hook 'with-editor-export-editor))
+
 (use-package simple
   :config (column-number-mode))
 
