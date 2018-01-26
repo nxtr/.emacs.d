@@ -213,6 +213,8 @@
 (use-package simple
   :config (column-number-mode))
 
+(use-package smex)
+
 (use-package term
   :defer t
   :config
