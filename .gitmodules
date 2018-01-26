@@ -54,6 +54,9 @@
 [submodule "hydra"]
 	path = lib/hydra
 	url = git@github.com:abo-abo/hydra.git
+[submodule "ivy"]
+	path = lib/ivy
+	url = git@github.com:abo-abo/swiper.git
 [submodule "magit"]
 	path = lib/magit
 	url = git@github.com:magit/magit.git

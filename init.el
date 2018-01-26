@@ -79,6 +79,13 @@
          ("M-g e"   . avy-goto-word-0)
          ("C-c C-j" . avy-resume)))
 
+(use-package counsel
+  :after ivy
+  :hook (ivy-mode . (lambda ()
+                      (if ivy-mode
+                          (counsel-mode +1)
+                        (counsel-mode -1)))))
+
 (use-package dash
   :config (dash-enable-font-lock))
 
@@ -125,6 +132,17 @@
 
 (progn ;    `isearch'
   (setq isearch-allow-scroll t))
+
+(use-package ivy
+  :commands ivy-mode
+  :bind (:map ivy-mode-map
+              ("C-c r" . ivy-resume))
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-use-selectable-prompt t)
+  (setq ivy-wrap t)
+  (setq ivy-count-format "(%d/%d) "))
 
 (use-package lisp-mode
   :config
@@ -214,6 +232,11 @@
   :config (column-number-mode))
 
 (use-package smex)
+
+(use-package swiper
+  :after ivy
+  :bind (:map ivy-mode-map
+              ("C-s" . swiper)))
 
 (use-package term
   :defer t
