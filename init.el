@@ -129,6 +129,38 @@
 (use-package epa
   :config (setq epa-pinentry-mode 'loopback))
 
+(use-package erc
+  :bind (:map erc-mode-map
+              ("RET"       . nil)
+              ("C-c RET"   . erc-send-current-line)
+              ("C-c C-RET" . erc-send-current-line))
+  :config
+  ;; Force TLS
+  (setq erc-server-connect-function 'erc-open-tls-stream)
+  (setq erc-server "chat.freenode.net")
+  ;; Use auth-source as password store
+  (advice-add 'erc-compute-port :before-until
+              (lambda (&optional r)
+                (plist-get(nth 0 (auth-source-search :host erc-server :max 1))
+                          :port)))
+  (advice-add 'erc-compute-nick :before-until
+              (lambda (&optional r)
+                (plist-get (nth 0 (auth-source-search :host erc-server :max 1))
+                           :user)))
+  (setq erc-prompt-for-password nil)
+  (erc-services-mode 1)
+  (setq erc-prompt-for-nickserv-password nil)
+
+  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-rename-buffers t)
+
+  (setq erc-autojoin-timing 'ident)
+  (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+
+  (setq erc-kill-buffer-on-part t)
+  (setq erc-kill-queries-on-quit t)
+  (setq erc-kill-server-buffer-on-quit t))
+
 (use-package eshell
   :bind (("C-x m" . eshell)
          ;; New eshell
