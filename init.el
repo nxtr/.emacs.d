@@ -30,11 +30,6 @@
   (require  'use-package)
   (setq use-package-verbose t))
 
-(use-package subr-x
-  :config
-  (put 'if-let   'byte-obsolete-info nil)
-  (put 'when-let 'byte-obsolete-info nil))
-
 (use-package auto-compile
   :demand t
   :config
@@ -54,6 +49,7 @@
               (expand-file-name "var/epkgs/" user-emacs-directory)))
 
 (use-package custom
+  :no-require t
   :config
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file)
