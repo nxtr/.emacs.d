@@ -99,6 +99,29 @@
   :defer t
   :config (setq dired-listing-switches "-alh"))
 
+(use-package display-line-numbers
+  :no-require t
+  :when (version<= "26.1" emacs-version)
+  :hook (prog-mode . display-line-numbers-mode)
+  :bind ([remap goto-line]
+         . (lambda ()
+             (interactive)
+             (let* ((initial-buffer (current-buffer))
+                    (buffer (if (consp current-prefix-arg)
+                                (other-buffer (current-buffer) t)
+                              initial-buffer))
+                    numbers)
+               (with-current-buffer buffer
+                 (unwind-protect
+                     (let ((display-line-numbers-width-start t)
+                           display-line-numbers-grow-only)
+                       (setq numbers display-line-numbers)
+                       (setq display-line-numbers t)
+                       ;; Force `buffer' to be other buffer
+                       (set-buffer initial-buffer)
+                       (call-interactively #'goto-line))
+                   (setq display-line-numbers numbers)))))))
+
 (use-package eldoc
   :when (version< "25" emacs-version)
   :config (global-eldoc-mode))
