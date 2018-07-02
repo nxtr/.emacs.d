@@ -126,6 +126,9 @@
   :when (version< "25" emacs-version)
   :config (global-eldoc-mode))
 
+(use-package epa
+  :config (setq epa-pinentry-mode 'loopback))
+
 (use-package eshell
   :bind (("C-x m" . eshell)
          ;; New eshell
