@@ -181,13 +181,6 @@
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
 
-(use-package fill-column-indicator
-  :config
-  (setq fci-rule-width 2)
-  (setq fci-rule-column 80)
-  (add-hook 'prog-mode-hook 'fci-mode)
-  (add-hook 'git-commit-setup-hook 'fci-mode))
-
 (use-package help
   :defer t
   :config (temp-buffer-resize-mode))

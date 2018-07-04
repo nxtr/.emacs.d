@@ -42,9 +42,6 @@
 [submodule "expand-region"]
 	path = lib/expand-region
 	url = git@github.com:magnars/expand-region.el.git
-[submodule "fill-column-indicator"]
-	path = lib/fill-column-indicator
-	url = git@github.com:alpaker/Fill-Column-Indicator.git
 [submodule "ghub"]
 	path = lib/ghub
 	url = git@github.com:magit/ghub.git
