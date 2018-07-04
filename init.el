@@ -79,6 +79,13 @@
          ("M-g e"   . avy-goto-word-0)
          ("C-c C-j" . avy-resume)))
 
+(use-package company
+  :hook (prog-mode . company-mode)
+  :config
+  (setq company-minimum-prefix-length   2)
+  (setq company-show-numbers            t)
+  (setq company-tooltip-flip-when-above t))
+
 (use-package counsel
   :after ivy
   :hook (ivy-mode . (lambda ()
