@@ -144,6 +144,32 @@
   (setq ivy-wrap t)
   (setq ivy-count-format "(%d/%d) "))
 
+(use-package linum
+  :when (version< emacs-version "26.1")
+  :hook (prog-mode . linum-mode)
+  :bind ([remap goto-line]
+         . (lambda ()
+             (interactive)
+             (let* ((initial-buffer (current-buffer))
+                    (buffer (if (consp current-prefix-arg)
+                                (other-buffer (current-buffer) t)
+                              initial-buffer)))
+               (with-current-buffer buffer
+                 (cond ((or linum-mode
+                            ;; Numeric prefix argument
+                            (and current-prefix-arg (not (consp current-prefix-arg))))
+                        ;; Force `buffer' to be other buffer
+                        (set-buffer initial-buffer)
+                        (call-interactively #'goto-line))
+                       (t (unwind-protect
+                              (let ((linum-format 'dynamic)
+                                    (linum-eager linum-delay))
+                                (linum-mode 1)
+                                ;; Force `buffer' to be other buffer
+                                (set-buffer initial-buffer)
+                                (call-interactively #'goto-line))
+                            (linum-mode -1)))))))))
+
 (use-package lisp-mode
   :config
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
