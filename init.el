@@ -278,6 +278,9 @@
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   (setq create-lockfiles nil))
 
+(use-package paredit
+  :hook ((emacs-lisp-mode ielm-mode lisp-mode) . paredit-mode))
+
 (use-package paren
   :config (show-paren-mode))
 
