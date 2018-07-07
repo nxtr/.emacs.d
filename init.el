@@ -91,7 +91,13 @@
   :hook (ivy-mode . (lambda ()
                       (if ivy-mode
                           (counsel-mode +1)
-                        (counsel-mode -1)))))
+                        (counsel-mode -1))))
+  :bind (:map counsel-mode-map
+              ("C-c g"  . counsel-git)
+              ("C-c j"  . counsel-git-grep)
+              ("<f1> l" . counsel-find-library)
+              ("C-c f"  . counsel-recentf)
+              ("<f2> u" . counsel-unicode-char)))
 
 (use-package dash
   :config (dash-enable-font-lock))
