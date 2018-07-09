@@ -235,6 +235,9 @@
                             (linum-mode -1)))))))))
 
 (use-package lisp-mode
+  :hook ((emacs-lisp-mode lisp-mode)
+         . (lambda ()
+             (add-hook 'after-save-hook 'check-parens nil t)))
   :config
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
   (add-hook 'emacs-lisp-mode-hook 'reveal-mode)
