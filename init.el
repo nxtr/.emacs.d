@@ -368,6 +368,10 @@
 (use-package which-key
   :config (which-key-mode))
 
+(use-package whitespace
+  :hook (prog-mode . whitespace-mode)
+  :config (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
 (use-package ws-butler
   :init
   (add-hook 'prog-mode-hook #'ws-butler-mode))
