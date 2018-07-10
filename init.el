@@ -260,7 +260,15 @@
                           'append)
   ;; Popup settings
   (magit-define-popup-option 'magit-commit-popup
-    ?D "Override the author date" "--date=" #'read-from-minibuffer))
+    ?D "Override the author date" "--date=" #'read-from-minibuffer)
+  (magit-define-popup-action 'magit-file-popup
+    ?R "Rename file" 'magit-file-rename)
+  (magit-define-popup-action 'magit-file-popup
+    ?K "Delete file" 'magit-file-delete)
+  (magit-define-popup-action 'magit-file-popup
+    ?U "Untrack file" 'magit-file-untrack)
+  (magit-define-popup-action 'magit-file-popup
+    ?C "Checkout file" 'magit-file-checkout))
 
 (use-package man
   :defer t
