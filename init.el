@@ -257,7 +257,10 @@
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
-                          'append))
+                          'append)
+  ;; Popup settings
+  (magit-define-popup-option 'magit-commit-popup
+    ?D "Override the author date" "--date=" #'read-from-minibuffer))
 
 (use-package man
   :defer t
