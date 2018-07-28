@@ -205,6 +205,7 @@
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (setq ivy-use-selectable-prompt t)
+  (setq ivy-extra-directories nil)
   (setq ivy-wrap t)
   (setq ivy-count-format "(%d/%d) "))
 
