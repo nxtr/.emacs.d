@@ -77,7 +77,9 @@
          ("M-g g"   . avy-goto-line)
          ("M-g w"   . avy-goto-word-1)
          ("M-g e"   . avy-goto-word-0)
-         ("C-c C-j" . avy-resume)))
+         ("C-c C-j" . avy-resume))
+  :config
+  (setq avy-background      t))
 
 (use-package company
   :hook (prog-mode . company-mode)
