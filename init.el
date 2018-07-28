@@ -299,7 +299,10 @@
   (setq create-lockfiles nil))
 
 (use-package paredit
-  :hook ((emacs-lisp-mode ielm-mode lisp-mode) . paredit-mode))
+  :hook ((emacs-lisp-mode
+          ielm-mode
+          lisp-mode
+          eval-expression-minibuffer-setup) . paredit-mode))
 
 (use-package paren
   :config (show-paren-mode))
