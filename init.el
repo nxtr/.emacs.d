@@ -315,6 +315,13 @@
   :demand t
   :config (pdf-tools-install))
 
+(use-package pdf-view
+  :after pdf-tools
+  :bind (:map pdf-view-mode-map
+              ("C-r" . isearch-backward)
+              ("C-s" . isearch-forward))
+  :config (setq pdf-view-use-unicode-ligther nil))
+
 (use-package prog-mode
   :config (global-prettify-symbols-mode)
   (defun indicate-buffer-boundaries-left ()
