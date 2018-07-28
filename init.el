@@ -200,7 +200,12 @@
 (use-package ivy
   :commands ivy-mode
   :bind (:map ivy-mode-map
-              ("C-c r" . ivy-resume))
+              ("C-c r"   . ivy-resume)
+              ("C-x B"   . ivy-switch-buffer-other-window)
+              ("C-c v"   . ivy-push-view)
+              ("C-c V"   . ivy-pop-view)
+              ("C-c C-v" . ivy-switch-view))
+
   :config
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
@@ -358,8 +363,20 @@
 
 (use-package swiper
   :after ivy
-  :bind (:map ivy-mode-map
-              ("C-s" . swiper)))
+  :config
+  (define-key ivy-mode-map (kbd "C-s")
+    (defalias (make-symbol "swiper-or-swiper-all")
+      ;; Wrapped in `defalias' with uninterned SYMBOL so `describe-key'
+      ;; displays command as a proper symbol instead of byte-codes
+      (lambda ()
+        "Runs the command swiper.
+With a prefix argument, run the command swiper-all."
+        (interactive)
+        (if current-prefix-arg
+            (swiper-all)
+          (swiper)))))
+  (define-key ivy-mode-map (kbd "C-r")
+    (lookup-key ivy-mode-map (kbd "C-s"))))
 
 (use-package term
   :defer t
