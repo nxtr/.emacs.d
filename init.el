@@ -246,6 +246,11 @@
     (setq indent-tabs-mode nil))
   (add-hook 'lisp-interaction-mode-hook #'indent-spaces-mode))
 
+(use-package lisp-mode
+  :after paredit
+  :bind (:map lisp-interaction-mode-map
+              ("C-S-j" . eval-print-last-sexp)))
+
 (use-package magit
   :defer t
   :bind (("C-x g"   . magit-status)
