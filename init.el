@@ -201,6 +201,9 @@
 (use-package hl-todo
   :config (global-hl-todo-mode))
 
+(use-package ibuffer
+  :bind (("C-x C-b" . ibuffer)))
+
 (use-package imenu
   :bind (("M-i" . imenu)))
 
