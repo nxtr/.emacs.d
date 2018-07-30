@@ -196,6 +196,9 @@
 (use-package hl-todo
   :config (global-hl-todo-mode))
 
+(use-package imenu
+  :bind (("M-i" . imenu)))
+
 (progn ;    `isearch'
   (setq isearch-allow-scroll t))
 
