@@ -392,6 +392,10 @@ With a prefix argument, run the command swiper-all."
 (progn ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
 
+(progn ;     themes
+  (defadvice load-theme (before theme-dont-propagate activate)
+    (mapc #'disable-theme custom-enabled-themes)))
+
 (use-package tramp
   :defer t
   :config
