@@ -65,6 +65,11 @@
 
 ;;; Long tail
 
+(use-package abbrev
+  :config
+  (setq save-abbrevs 'silently)
+  (setq-default abbrev-mode t))
+
 (use-package ace-window
   :demand t
   :bind ("M-o" . ace-window))
