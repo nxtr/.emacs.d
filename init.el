@@ -423,6 +423,11 @@ With a prefix argument, run the command swiper-all."
                                           before-user-init-time))))
             t))
 
+(progn ;     local packages
+  (let ((dir (expand-file-name "local" user-emacs-directory)))
+    (when (file-exists-p dir)
+      (add-to-list 'load-path dir))))
+
 (progn ;     host-specific
   (let* ((host (substring (shell-command-to-string "hostname") 0 -1))
          (host-dir-name (concat user-emacs-directory "hosts/" host))
