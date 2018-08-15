@@ -130,6 +130,9 @@
   :defer t
   :config (setq dired-listing-switches "-alh"))
 
+(use-package disable-mouse
+  :when (display-mouse-p))
+
 (use-package display-line-numbers
   :no-require t
   :when (version<= "26.1" emacs-version)

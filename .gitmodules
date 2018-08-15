@@ -32,6 +32,9 @@
 [submodule "diminish"]
 	path = lib/diminish
 	url = git@github.com:myrjola/diminish.el.git
+[submodule "disable-mouse"]
+	path = lib/disable-mouse
+	url = git@github.com:purcell/disable-mouse.git
 [submodule "emacsql"]
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
