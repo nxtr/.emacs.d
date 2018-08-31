@@ -444,7 +444,9 @@ With a prefix argument, run the command swiper-all."
 (progn ;     local packages
   (let ((dir (expand-file-name "local" user-emacs-directory)))
     (when (file-exists-p dir)
-      (add-to-list 'load-path dir))))
+      (let ((default-directory dir))
+        (add-to-list 'load-path dir)
+        (normal-top-level-add-subdirs-to-load-path)))))
 
 (progn ;     host-specific init
   (let* ((host (substring (shell-command-to-string "hostname") 0 -1))
