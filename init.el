@@ -75,7 +75,11 @@
 
 (use-package ace-window
   :demand t
-  :bind ("M-o" . ace-window))
+  :bind ("M-o" . ace-window)
+  :config
+  (setq aw-background nil)
+  (setq aw-dispatch-always 't)
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package avy
   :init (avy-setup-default)
