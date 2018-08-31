@@ -446,16 +446,15 @@ With a prefix argument, run the command swiper-all."
     (when (file-exists-p dir)
       (add-to-list 'load-path dir))))
 
-(progn ;     host-specific
+(progn ;     host-specific init
   (let* ((host (substring (shell-command-to-string "hostname") 0 -1))
-         (host-dir-name (concat user-emacs-directory "hosts/" host))
-         (host-file (expand-file-name "init.el" host-dir-name)))
-    (when (file-exists-p host-dir-name)
-      (let ((default-directory host-dir-name))
+         (host-dir (concat user-emacs-directory "hosts/" host))
+         (host-file (expand-file-name "init.el" host-dir)))
+    (when (file-exists-p host-dir)
+      (let ((default-directory host-dir))
         (setq load-path
               (append
-               ;; Shadow
-               (let ((load-path  (copy-sequence load-path)))
+               (let ((load-path (copy-sequence load-path)))
                  (append
                   (copy-sequence (normal-top-level-add-to-load-path '(".")))
                   (normal-top-level-add-subdirs-to-load-path)))
