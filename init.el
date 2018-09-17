@@ -91,6 +91,10 @@
   :config
   (setq avy-background      t))
 
+(use-package cc-mode
+  :hook ((java-mode . (lambda ()
+                        (c-set-offset 'arglist-intro '++)))))
+
 (use-package company
   :hook (prog-mode . company-mode)
   :bind (:map company-active-map
