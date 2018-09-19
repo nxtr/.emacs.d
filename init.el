@@ -497,7 +497,8 @@ With a prefix argument, run the command swiper-all."
   :config (which-key-mode))
 
 (use-package whitespace
-  :hook (prog-mode . whitespace-mode)
+  :hook ((prog-mode . whitespace-mode)
+         (nxml-mode . whitespace-mode))
   :config (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (use-package ws-butler
