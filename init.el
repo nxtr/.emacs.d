@@ -96,8 +96,9 @@
 (use-package company
   :hook (prog-mode . company-mode)
   :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous))
+              ("C-c h" . company-quickhelp-manual-begin)
+              ("C-n"   . company-select-next)
+              ("C-p"   . company-select-previous))
   :config
   (setq company-minimum-prefix-length   2)
   (setq company-show-numbers            t)
