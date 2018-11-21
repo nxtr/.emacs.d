@@ -309,6 +309,11 @@
   :defer t
   :config (setq Man-width 80))
 
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'"       . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
+
 (use-package multiple-cursors
   :bind (("M-RET"   . mc/edit-lines)
          ("C-<"     . mc/mark-previous-like-this)
