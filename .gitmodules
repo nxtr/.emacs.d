@@ -104,6 +104,9 @@
 [submodule "rainbow-mode"]
 	path = lib/rainbow-mode
 	url = git@github.com:emacsmirror/rainbow-mode.git
+[submodule "restclient"]
+	path = lib/restclient
+	url = git@github.com:pashky/restclient.el.git
 [submodule "smex"]
 	path = lib/smex
 	url = git@github.com:nonsequitur/smex.git
