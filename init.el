@@ -104,6 +104,8 @@
   (setq company-show-numbers            t)
   (setq company-tooltip-flip-when-above t))
 
+(use-package company-quickhelp)
+
 (use-package counsel
   :after ivy
   :hook (ivy-mode . (lambda ()
