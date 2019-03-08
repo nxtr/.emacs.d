@@ -447,7 +447,8 @@ With a prefix argument, run the command swiper-all."
 
 (use-package ws-butler
   :init
-  (add-hook 'prog-mode-hook #'ws-butler-mode))
+  (add-hook 'prog-mode-hook #'ws-butler-mode)
+  (add-hook 'nxml-mode-hook #'ws-butler-mode))
 
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
