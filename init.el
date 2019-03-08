@@ -222,6 +222,15 @@
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
 
+(use-package files
+  :config
+  (defun find-file-sudo ()
+    "Reopen the current file as root, preserving point position."
+    (interactive)
+    (let ((p (point)))
+      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))
+      (goto-char p))))
+
 (use-package flycheck)
 
 (use-package help
