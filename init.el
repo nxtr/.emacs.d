@@ -198,11 +198,7 @@
   (setq erc-kill-server-buffer-on-quit t))
 
 (use-package eshell
-  :bind (("C-x m" . eshell)
-         ;; New eshell
-         ("C-x M" . (lambda ()
-                      (interactive)
-                      (eshell t)))))
+  :bind (("C-x m" . eshell)))
 
 (use-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
