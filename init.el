@@ -298,6 +298,7 @@
                           'magit-insert-modules
                           'magit-insert-stashes
                           'append)
+  (add-hook 'magit-section-movement-hook 'magit-status-maybe-update-blob-buffer)
   ;; Popup settings
   (magit-define-popup-option 'magit-commit-popup
     ?D "Override the author date" "--date=" #'read-from-minibuffer)
