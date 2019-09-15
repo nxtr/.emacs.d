@@ -243,6 +243,19 @@
   (setq ivy-wrap t)
   (setq ivy-count-format "(%d/%d) "))
 
+(use-package ivy-posframe
+  :commands ivy-posframe-mode
+  :config
+  (setq ivy-posframe-display-functions-alist
+        '((swiper . nil)
+          (counsel-rg . nil)
+          (counsel-git-grep . nil)
+          (counsel-locate . nil)
+          (t . ivy-posframe-display-at-point)))
+  (setq ivy-posframe-parameters
+        '((left-fringe . 8)
+          (right-fringe . 8))))
+
 (use-package linum
   :when (version< emacs-version "26.1")
   :hook (prog-mode . linum-mode)
