@@ -254,7 +254,30 @@
           (t . ivy-posframe-display-at-point)))
   (setq ivy-posframe-parameters
         '((left-fringe . 8)
-          (right-fringe . 8))))
+          (right-fringe . 8)))
+  (setq ivy-posframe-size-function
+        (lambda ()
+          (let ((size (ivy-posframe-get-size))
+                (win (active-minibuffer-window)))
+            (when win
+              (let ((prompt (split-string
+                             (with-selected-window win
+                               (with-temp-buffer
+                                 (ivy--insert-prompt)
+                                 (buffer-string)))
+                             "\n"))
+                    (candidates (split-string
+                                 (ivy--format
+                                  (ivy--filter ivy-text ivy--all-candidates))
+                                 "\n")))
+                (unless (plist-get size :width)
+                  (let ((prompt-col (seq-max (seq-map #'length prompt)))
+                        (candidates-col (seq-max (seq-map #'length candidates))))
+                    (plist-put size :width (max (+ prompt-col (length ivy-text) 2)
+                                                candidates-col))))
+                (unless (plist-get size :height)
+                  (plist-put size :height (+ (length prompt) (length candidates) -1)))))
+            size))))
 
 (use-package linum
   :when (version< emacs-version "26.1")
