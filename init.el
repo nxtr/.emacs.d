@@ -330,7 +330,9 @@
                           'magit-insert-modules
                           'magit-insert-stashes
                           'append)
-  (add-hook 'magit-section-movement-hook 'magit-status-maybe-update-blob-buffer))
+  (add-hook 'magit-section-movement-hook 'magit-status-maybe-update-blob-buffer)
+  (transient-append-suffix 'magit-commit "-A"
+    '("-D" "Override the author date" "--date=" read-from-minibuffer)))
 
 (use-package man
   :defer t
