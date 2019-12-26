@@ -250,6 +250,8 @@
   :config
   (setq ivy-posframe-display-functions-alist
         '((swiper . ivy-display-function-fallback)
+          (swiper-all . ivy-display-function-fallback)
+          (swiper-isearch . ivy-display-function-fallback)
           (counsel-rg . ivy-display-function-fallback)
           (counsel-git-grep . ivy-display-function-fallback)
           (counsel-locate . ivy-display-function-fallback)
