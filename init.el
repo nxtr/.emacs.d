@@ -109,11 +109,15 @@
                           (counsel-mode +1)
                         (counsel-mode -1))))
   :bind (:map counsel-mode-map
+              ("C-c c"  . counsel-compile)
               ("C-c g"  . counsel-git)
               ("C-c j"  . counsel-git-grep)
+              ("C-c L"  . counsel-git-log)
               ("C-c k"  . counsel-rg)
+              ("C-c o"  . counsel-outline)
               ("C-x l"  . counsel-locate)
               ("<f1> l" . counsel-find-library)
+              ("C-c J"  . counsel-file-jump)
               ("C-c f"  . counsel-recentf)
               ("<f2> u" . counsel-unicode-char)))
 
