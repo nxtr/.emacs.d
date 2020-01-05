@@ -439,7 +439,7 @@ With a prefix argument, run the command swiper-all."
         (interactive)
         (if current-prefix-arg
             (swiper-all)
-          (swiper)))))
+          (swiper-isearch)))))
   (define-key ivy-mode-map (kbd "C-r")
     (lookup-key ivy-mode-map (kbd "C-s"))))
 
