@@ -395,7 +395,15 @@
   :bind (:map pdf-view-mode-map
               ("C-r" . isearch-backward)
               ("C-s" . isearch-forward))
-  :config (setq pdf-view-use-unicode-ligther nil))
+  :config (setq pdf-view-use-unicode-ligther nil)
+  :hook (pdf-view-mode
+         . (lambda ()
+             (let ((oldmap (cdr (assoc 'ivy-mode minor-mode-map-alist)))
+                   (newmap (make-sparse-keymap)))
+               (set-keymap-parent newmap oldmap)
+               (define-key newmap (kbd "C-r") nil)
+               (define-key newmap (kbd "C-s") nil)
+               (push `(ivy-mode . ,newmap) minor-mode-overriding-map-alist)))))
 
 (use-package prog-mode
   :config (global-prettify-symbols-mode)
