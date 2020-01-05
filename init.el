@@ -223,7 +223,9 @@
   :bind (("C-x C-b" . ibuffer)))
 
 (use-package imenu
-  :bind (("M-i" . imenu)))
+  :bind (("M-i" . imenu))
+  :config
+  (setq imenu-max-item-length nil))
 
 (progn ;    `isearch'
   (setq isearch-allow-scroll t))
