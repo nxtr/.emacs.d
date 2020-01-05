@@ -387,8 +387,8 @@
   :config (global-paren-face-mode))
 
 (use-package pdf-tools
-  :demand t
-  :config (pdf-tools-install))
+  :defer t
+  :init (pdf-tools-install))
 
 (use-package pdf-view
   :after pdf-tools
