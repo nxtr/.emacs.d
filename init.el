@@ -275,7 +275,10 @@
                                  (buffer-string))
                                "\n"))
                       (prompt-col (seq-max (seq-map #'length prompt))))
-                 (max (+ prompt-col (length ivy-text) 2))))))))
+                 (max (+ prompt-col (length ivy-text) 2)))))))
+  (define-advice ivy-posframe--display (:around (fun &rest args) nxtr/ivy-posframe--display)
+    (let ((ivy-posframe-font (face-attribute 'default :font (selected-frame))))
+      (apply fun args))))
 
 (use-package linum
   :when (version< emacs-version "26.1")
