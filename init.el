@@ -249,10 +249,10 @@
   :commands ivy-posframe-mode
   :config
   (setq ivy-posframe-display-functions-alist
-        '((swiper . nil)
-          (counsel-rg . nil)
-          (counsel-git-grep . nil)
-          (counsel-locate . nil)
+        '((swiper . ivy-display-function-fallback)
+          (counsel-rg . ivy-display-function-fallback)
+          (counsel-git-grep . ivy-display-function-fallback)
+          (counsel-locate . ivy-display-function-fallback)
           (t . ivy-posframe-display-at-point)))
   (setq ivy-posframe-parameters
         '((left-fringe . 8)
