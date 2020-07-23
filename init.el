@@ -368,12 +368,28 @@
          ("\\.markdown\\'" . markdown-mode)))
 
 (use-package multiple-cursors
-  :bind (("M-RET"   . mc/edit-lines)
-         ("C-<"     . mc/mark-previous-like-this)
-         ("C->"     . mc/mark-next-like-this)
-         ("C-M-<"   . mc/unmark-next-like-this)
-         ("C-M->"   . mc/unmark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this)))
+  :bind (("M-RET"         . mc/edit-lines)
+         ("C-<"           . mc/mark-previous-like-this)
+         ("C->"           . mc/mark-next-like-this)
+         ("C-M-<"         . mc/unmark-next-like-this)
+         ("C-M->"         . mc/unmark-previous-like-this)
+         ("C-c C-<"       . mc/mark-all-like-this)
+         ("C-S-SPC"       . mc/toggle-cursor-at-point)
+         ("<C-S-return>"  . multiple-cursors-mode)
+         ("C-S-<mouse-1>" . 'mc/add-cursor-on-click))
+  :config
+  ;; https://stackoverflow.com/questions/39882624/setting-arbitrary-cursor-positions-with-multiple-cursors-in-emacs
+  (defun mc/toggle-cursor-at-point ()
+    "Add or remove a cursor at point."
+    (interactive)
+    (if multiple-cursors-mode
+        (message "Cannot toggle cursor at point while `multiple-cursors-mode' is active.")
+      (let ((existing (mc/fake-cursor-at-point)))
+        (if existing
+            (mc/remove-fake-cursor existing)
+          (mc/create-fake-cursor-at-point)))))
+  (add-to-list 'mc/cmds-to-run-once 'mc/toggle-cursor-at-point)
+  (add-to-list 'mc/cmds-to-run-once 'multiple-cursors-mode))
 
 (use-package no-littering
   :demand t
