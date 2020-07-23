@@ -51,10 +51,11 @@
 
 (use-package custom
   :no-require t
-  :config
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file)
-    (load custom-file)))
+  :config (progn
+            (setq custom-file
+                  (expand-file-name "custom.el" user-emacs-directory))
+            (when (file-exists-p custom-file)
+              (load custom-file))))
 
 (use-package server
   :config (or (server-running-p) (server-mode)))
@@ -192,11 +193,11 @@
   (setq erc-server "chat.freenode.net")
   ;; Use auth-source as password store
   (advice-add 'erc-compute-port :before-until
-              (lambda (&optional r)
+              (lambda (&optional _)
                 (plist-get(nth 0 (auth-source-search :host erc-server :max 1))
                           :port)))
   (advice-add 'erc-compute-nick :before-until
-              (lambda (&optional r)
+              (lambda (&optional _)
                 (plist-get (nth 0 (auth-source-search :host erc-server :max 1))
                            :user)))
   (setq erc-prompt-for-password nil)
@@ -223,13 +224,13 @@
   :bind (("C-=" . er/expand-region)))
 
 (use-package files
-  :config
-  (defun find-file-sudo ()
-    "Reopen the current file as root, preserving point position."
-    (interactive)
-    (let ((p (point)))
-      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))
-      (goto-char p))))
+  :config (defun find-file-sudo ()
+            "Reopen the current file as root, preserving point position."
+            (interactive)
+            (let ((p (point)))
+              (find-alternate-file
+               (concat "/sudo:root@localhost:" buffer-file-name))
+              (goto-char p))))
 
 (use-package flycheck)
 
@@ -472,8 +473,9 @@
   :config
   (define-key ivy-mode-map (kbd "C-s")
     (defalias (make-symbol "swiper-or-swiper-all")
-      ;; Wrapped in `defalias' with uninterned SYMBOL so `describe-key'
-      ;; displays command as a proper symbol instead of byte-codes
+      ;; Wrapped with `defalias' and uninterned SYMBOL so
+      ;; `describe-key' displays command as a proper symbol
+      ;; instead of byte-codes
       (lambda ()
         "Runs the command swiper.
 With a prefix argument, run the command swiper-all."
@@ -489,12 +491,12 @@ With a prefix argument, run the command swiper-all."
   :config
   (require 'with-editor)
   (add-hook 'term-exec-hook 'with-editor-export-editor))
+
 (use-package smerge-mode
   :defer t
-  :config
-  (when (>= emacs-major-version 27)
-    (set-face-attribute 'smerge-refined-removed nil :extend t)
-    (set-face-attribute 'smerge-refined-added   nil :extend t)))
+  :config (when (>= emacs-major-version 27)
+            (set-face-attribute 'smerge-refined-removed nil :extend t)
+            (set-face-attribute 'smerge-refined-added   nil :extend t)))
 
 (progn ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
@@ -506,14 +508,14 @@ With a prefix argument, run the command swiper-all."
 (use-package tramp
   :defer t
   :config
-  (add-to-list 'tramp-default-proxies-alist '(nil "\\`root\\'" "/ssh:%h:"))
+  (add-to-list 'tramp-default-proxies-alist
+               '(nil "\\`root\\'" "/ssh:%h:"))
   (add-to-list 'tramp-default-proxies-alist '("localhost" nil nil))
   (add-to-list 'tramp-default-proxies-alist
                (list (regexp-quote (system-name)) nil nil))
-  (setq vc-ignore-dir-regexp
-        (format "\\(%s\\)\\|\\(%s\\)"
-                vc-ignore-dir-regexp
-                tramp-file-name-regexp)))
+  (setq vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)"
+                                     vc-ignore-dir-regexp
+                                     tramp-file-name-regexp)))
 
 (use-package undo-tree
   :config (global-undo-tree-mode))
