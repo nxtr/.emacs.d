@@ -4,4 +4,5 @@
 /.hive-maint
 /custom.el
 /elpa
+/eshell
 /var
