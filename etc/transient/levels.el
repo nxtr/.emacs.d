@@ -9,5 +9,7 @@
   (magit-file-delete . 1)
   (t . 1)
   (magit-file-rename . 1))
+ (magit-pull
+  (transient:magit-pull:--autostash . 4))
  (magit-rebase
   (magit-reshelve-since . 2)))
