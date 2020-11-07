@@ -520,6 +520,12 @@ With a prefix argument, run the command swiper-all."
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
+(use-package vterm
+  :defer t
+  :config
+  (require 'with-editor)
+  (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+
 (use-package which-key
   :config (which-key-mode))
 

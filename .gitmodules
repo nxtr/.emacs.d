@@ -139,6 +139,9 @@
 [submodule "use-package"]
 	path = lib/use-package
 	url = git@github.com:jwiegley/use-package.git
+[submodule "vterm"]
+	path = lib/vterm
+	url = git@github.com:akermu/emacs-libvterm.git
 [submodule "which-key"]
 	path = lib/which-key
 	url = git@github.com:justbur/emacs-which-key.git
