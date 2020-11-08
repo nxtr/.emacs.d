@@ -291,13 +291,18 @@
            :min-height (or ivy-posframe-min-height ivy-height)
            :min-width
            (or ivy-posframe-min-width
-               (let* ((prompt (split-string
+               (let* ((buf-rows (split-string
+                                 (with-current-buffer ivy-posframe-buffer
+                                   (buffer-string))
+                                 "\n"))
+                      (prompt (split-string
                                (with-temp-buffer
                                  (ivy--insert-prompt)
                                  (buffer-string))
                                "\n"))
-                      (prompt-col (seq-max (seq-map #'length prompt))))
-                 (max (+ prompt-col (length ivy-text) 2)))))))
+                      (max-prompt-col (seq-max (seq-map 'length prompt))))
+                 (max (seq-max (seq-map 'length buf-rows))
+                      (+ max-prompt-col (length ivy-text) 2)))))))
   (define-advice ivy-posframe--display (:around (fun &rest args) nxtr/ivy-posframe--display)
     (let ((ivy-posframe-font (face-attribute 'default :font (selected-frame))))
       (apply fun args))))
