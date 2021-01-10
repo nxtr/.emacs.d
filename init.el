@@ -218,6 +218,8 @@
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
 
+(use-package flycheck)
+
 (use-package help
   :defer t
   :config (temp-buffer-resize-mode))
