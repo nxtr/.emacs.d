@@ -12,17 +12,7 @@
   (when (< emacs-major-version 27)
     (setq package-enable-at-startup nil)
     ;; (package-initialize)
-    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
-  (setq inhibit-startup-buffer-menu t)
-  (setq inhibit-startup-screen t)
-  (setq inhibit-startup-echo-area-message "locutus")
-  (setq initial-buffer-choice t)
-  (setq initial-scratch-message "")
-  (when (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode 0))
-  (when (fboundp 'tool-bar-mode)
-    (tool-bar-mode 0))
-  (menu-bar-mode 0))
+    (load-file (expand-file-name "early-init.el" user-emacs-directory))))
 
 (progn ;    `borg'
   (add-to-list 'load-path (expand-file-name "lib/borg" user-emacs-directory))
@@ -32,110 +22,110 @@
 (progn ;    `use-package'
   (eval-when-compile
     (require 'use-package))
-  ;; (require 'diminish)                  ;if you use :diminish
+  (require 'diminish)                   ;if you use :diminish
   (require 'bind-key)                   ;if you use any :bind variant
   (setq use-package-verbose t))
 
-(use-package auto-compile
-  :config
-  (setq auto-compile-display-buffer               nil)
-  (setq auto-compile-mode-line-counter            t)
-  (setq auto-compile-source-recreate-deletes-dest t)
-  (setq auto-compile-toggle-deletes-nonlib-dest   t)
-  (setq auto-compile-update-autoloads             t))
+(use-package auto-compile)
 
 (use-package epkg
   :defer t
-  :init (setq epkg-repository
-              (expand-file-name "var/epkgs/" user-emacs-directory)))
+  :init
+  (setq epkg-repository (expand-file-name "var/epkgs/" user-emacs-directory)))
 
 (use-package custom
   :no-require t
-  :config (progn
-            (setq custom-file
-                  (expand-file-name "custom.el" user-emacs-directory))
-            (when (file-exists-p custom-file)
-              (load custom-file))))
+  :config
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file)
+    (load custom-file)))
 
 (use-package server
-  :config (or (server-running-p) (server-mode)))
+  :config
+  (or (server-running-p) (server-mode)))
 
 (progn ;     startup
   (message "Loading early birds...done (%.3fs)"
-           (float-time (time-subtract (current-time)
-                                      before-user-init-time))))
+           (float-time (time-subtract (current-time) before-user-init-time))))
 
 ;;; Long tail
 
 (use-package abbrev
   :config
-  (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t))
 
 (use-package ace-window
   :demand t
-  :bind ("M-o" . ace-window)
-  :config
-  (setq aw-background nil)
-  (setq aw-dispatch-always 't)
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+  :bind
+  (("M-o" . ace-window)
+   ("M-O"
+    . (lambda (&rest args)
+        "Runs an alternative command `ace-window' that always dispatch everywhere.
+
+Scope will be opposite to `frame'/`global'."
+        (interactive (advice-eval-interactive-spec
+                      (cadr (interactive-form 'ace-window))))
+        (let ((aw-scope (if (eq aw-scope 'frame)
+                            'global
+                          'frame))
+              (aw-dispatch-always t)
+              aw-ignore-on)
+          (apply 'ace-window args))))
+   ("C-M-o"
+    . (lambda (&rest args)
+        "Runs an alternative command `ace-window' that always dispatch everywhere."
+        (interactive (advice-eval-interactive-spec
+                      (cadr (interactive-form 'ace-window))))
+        (let ((aw-dispatch-always t)
+              aw-ignore-on)
+          (apply 'ace-window args))))))
 
 (use-package avy
   :init (avy-setup-default)
-  :bind (("C-:"     . avy-goto-char)
-         ("C-'"     . avy-goto-char-timer)
-         ;; ("C-'"     . avy-goto-char-2)
-         ("M-g g"   . avy-goto-line)
-         ("M-g w"   . avy-goto-word-1)
-         ("M-g e"   . avy-goto-word-0)
-         ("C-c C-j" . avy-resume))
-  :config
-  (setq avy-background      t))
-
-(use-package cc-mode
-  :hook ((java-mode . (lambda ()
-                        (c-set-offset 'arglist-intro '++)))))
+  :bind
+  (("C-:"     . avy-goto-char)
+   ("C-'"     . avy-goto-char-timer)
+   ;; ("C-'"     . avy-goto-char-2)
+   ("M-g g"   . avy-goto-line)
+   ("M-g w"   . avy-goto-word-1)
+   ("M-g e"   . avy-goto-word-0)
+   ("C-c C-j" . avy-resume)))
 
 (use-package company
-  :hook (prog-mode . company-mode)
-  :bind (:map company-active-map
-              ("C-c h" . company-quickhelp-manual-begin)
-              ("C-n"   . company-select-next)
-              ("C-p"   . company-select-previous))
-  :config
-  (setq company-minimum-prefix-length   2)
-  (setq company-show-numbers            t)
-  (setq company-tooltip-flip-when-above t))
+  :bind
+  (:map company-active-map
+        ("C-c h" . company-quickhelp-manual-begin)
+        ("C-n"   . company-select-next)
+        ("C-p"   . company-select-previous)))
 
 (use-package company-quickhelp)
 
 (use-package counsel
   :after ivy
-  :hook (ivy-mode . (lambda ()
-                      (if ivy-mode
-                          (counsel-mode +1)
-                        (counsel-mode -1))))
-  :bind (:map counsel-mode-map
-              ("C-c c"  . counsel-compile)
-              ("C-c g"  . counsel-git)
-              ("C-c j"  . counsel-git-grep)
-              ("C-c L"  . counsel-git-log)
-              ("C-c k"  . counsel-rg)
-              ("C-c o"  . counsel-outline)
-              ("C-x l"  . counsel-locate)
-              ("<f1> l" . counsel-find-library)
-              ("C-c J"  . counsel-file-jump)
-              ("C-c f"  . counsel-recentf)
-              ("<f2> u" . counsel-unicode-char)))
+  :diminish
+  :hook
+  (ivy-mode
+   . (lambda ()
+       (if ivy-mode
+           (counsel-mode 1)
+         (counsel-mode -1))))
+  :bind
+  (:map counsel-mode-map
+        ("C-c c"  . counsel-compile)
+        ("C-c g"  . counsel-git)
+        ("C-c j"  . counsel-git-grep)
+        ("C-c L"  . counsel-git-log)
+        ("C-c k"  . counsel-rg)
+        ("C-c o"  . counsel-outline)
+        ("C-x l"  . counsel-locate)
+        ("<f1> l" . counsel-find-library)
+        ("C-c J"  . counsel-file-jump)
+        ("C-c f"  . counsel-recentf)
+        ("<f2> u" . counsel-unicode-char)))
 
-(use-package dash
-  :config (dash-enable-font-lock))
+(use-package dash)
 
-(use-package diff-hl
-  :config
-  (setq diff-hl-draw-borders nil)
-  (global-diff-hl-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh t))
+(use-package diff-hl)
 
 (use-package diff-mode
   :defer t
@@ -146,8 +136,7 @@
     (set-face-attribute 'diff-refine-added   nil :extend t)))
 
 (use-package dired
-  :defer t
-  :config (setq dired-listing-switches "-alh"))
+  :defer t)
 
 (use-package disable-mouse
   :when (display-mouse-p))
@@ -155,43 +144,45 @@
 (use-package display-line-numbers
   :no-require t
   :when (version<= "26.1" emacs-version)
-  :hook (prog-mode . display-line-numbers-mode)
-  :bind ([remap goto-line]
-         . (lambda ()
-             (interactive)
-             (let* ((initial-buffer (current-buffer))
-                    (buffer (if (consp current-prefix-arg)
-                                (other-buffer (current-buffer) t)
-                              initial-buffer))
-                    numbers)
-               (with-current-buffer buffer
-                 (unwind-protect
-                     (let ((display-line-numbers-width-start t)
-                           display-line-numbers-grow-only)
-                       (setq numbers display-line-numbers)
-                       (setq display-line-numbers t)
-                       ;; Force `buffer' to be other buffer
-                       (set-buffer initial-buffer)
-                       (call-interactively #'goto-line))
-                   (setq display-line-numbers numbers)))))))
+  :bind
+  ([remap goto-line]
+   . (lambda ()
+       (interactive)
+       (let* ((initial-buffer (current-buffer))
+              (buffer (if (consp current-prefix-arg)
+                          (other-buffer (current-buffer) t)
+                        initial-buffer))
+              numbers)
+         (with-current-buffer buffer
+           (unwind-protect
+               (let ((display-line-numbers-width-start t)
+                     display-line-numbers-grow-only)
+                 (setq numbers display-line-numbers)
+                 (setq display-line-numbers t)
+                 ;; Force `buffer' to be other buffer
+                 (set-buffer initial-buffer)
+                 (call-interactively #'goto-line))
+             (setq display-line-numbers numbers)))))))
 
 (use-package eldoc
-  :when (version< "25" emacs-version)
-  :config (global-eldoc-mode))
+  :when (version< "25" emacs-version))
 
-(use-package epa
-  :config (setq epa-pinentry-mode 'loopback))
+(use-package emacs-lisp-mode
+  :defer t
+  :hook
+  (emacs-lisp-mode
+   . (lambda ()
+       (add-hook 'after-save-hook 'check-parens nil t))))
+
+(use-package epa)
 
 (use-package erc
-  :bind (:map erc-mode-map
-              ("RET"       . nil)
-              ("C-c RET"   . erc-send-current-line)
-              ("C-c C-RET" . erc-send-current-line))
+  :bind
+  (:map erc-mode-map
+        ("RET"       . nil)
+        ("C-c RET"   . erc-send-current-line)
+        ("C-c C-RET" . erc-send-current-line))
   :config
-  ;; Force TLS
-  (setq erc-server-connect-function 'erc-open-tls-stream)
-  (setq erc-server "chat.freenode.net")
-  ;; Use auth-source as password store
   (advice-add 'erc-compute-port :before-until
               (lambda (&optional _)
                 (plist-get(nth 0 (auth-source-search :host erc-server :max 1))
@@ -199,94 +190,80 @@
   (advice-add 'erc-compute-nick :before-until
               (lambda (&optional _)
                 (plist-get (nth 0 (auth-source-search :host erc-server :max 1))
-                           :user)))
-  (setq erc-prompt-for-password nil)
-  (erc-services-mode 1)
-  (setq erc-prompt-for-nickserv-password nil)
-
-  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-rename-buffers t)
-
-  (setq erc-autojoin-timing 'ident)
-  (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-
-  (setq erc-kill-buffer-on-part t)
-  (setq erc-kill-queries-on-quit t)
-  (setq erc-kill-server-buffer-on-quit t))
+                           :user))))
 
 (use-package eshell
-  :bind (("C-x m" . eshell)))
+  :bind
+  ("C-x m" . eshell))
 
 (use-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package expand-region
-  :bind (("C-=" . er/expand-region)))
+  :bind
+  ("C-=" . er/expand-region))
 
 (use-package files
-  :config (defun find-file-sudo ()
-            "Reopen the current file as root, preserving point position."
-            (interactive)
-            (let ((p (point)))
-              (find-alternate-file
-               (concat "/sudo:root@localhost:" buffer-file-name))
-              (goto-char p))))
+  :config
+  (defun find-file-sudo ()
+    "Reopen the current file as root, preserving point position."
+    (interactive)
+    (let ((p (point)))
+      (find-alternate-file
+       (concat "/sudo:root@localhost:" buffer-file-name))
+      (goto-char p))))
 
 (use-package flycheck)
 
 (use-package help
-  :defer t
-  :config (temp-buffer-resize-mode))
+  :defer t)
 
-(use-package hl-todo
-  :config (global-hl-todo-mode))
+(use-package hl-todo)
 
 (use-package ibuffer
-  :bind (("C-x C-b" . ibuffer)))
+  :bind
+  ("C-x C-b" . ibuffer))
 
 (use-package imenu
-  :bind (("M-i" . imenu))
-  :config
-  (setq imenu-max-item-length nil))
-
-(progn ;    `isearch'
-  (setq isearch-allow-scroll t))
+  :bind
+  ("M-i" . imenu))
 
 (use-package ivy
-  :commands ivy-mode
-  :bind (:map ivy-mode-map
-              ("C-c r"   . ivy-resume)
-              ("C-x B"   . ivy-switch-buffer-other-window)
-              ("C-c v"   . ivy-push-view)
-              ("C-c V"   . ivy-pop-view)
-              ("C-c C-v" . ivy-switch-view))
-
+  :demand t
+  :diminish
+  :bind
+  (:map ivy-mode-map
+        ("C-c r"   . ivy-resume)
+        ("C-x B"   . ivy-switch-buffer-other-window)
+        ("C-c v"   . ivy-push-view)
+        ("C-c V"   . ivy-pop-view)
+        ("C-c C-v" . ivy-switch-view))
   :config
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-use-selectable-prompt t)
-  (setq ivy-extra-directories nil)
-  (setq ivy-wrap t)
-  (setq ivy-count-format "(%d/%d) "))
+  (ivy-mode 1))
 
 (use-package ivy-posframe
-  :commands ivy-posframe-mode
+  :after ivy
+  :diminish
+  :hook
+  (ivy-mode
+   . (lambda ()
+       (if ivy-mode
+           (ivy-posframe-mode 1)
+         (ivy-posframe-mode -1))))
   :config
   (setq ivy-posframe-display-functions-alist
-        '((swiper . ivy-display-function-fallback)
-          (swiper-all . ivy-display-function-fallback)
-          (swiper-isearch . ivy-display-function-fallback)
-          (counsel-rg . ivy-display-function-fallback)
+        '((swiper           . ivy-display-function-fallback)
+          (swiper-all       . ivy-display-function-fallback)
+          (swiper-isearch   . ivy-display-function-fallback)
+          (counsel-rg       . ivy-display-function-fallback)
           (counsel-git-grep . ivy-display-function-fallback)
-          (counsel-locate . ivy-display-function-fallback)
-          (t . ivy-posframe-display-at-point)))
-  (setq ivy-posframe-parameters
-        '((left-fringe . 8)
-          (right-fringe . 8)))
+          (counsel-locate   . ivy-display-function-fallback)
+          (t                . ivy-posframe-display-at-point)))
   (setq ivy-posframe-size-function
         (lambda ()
           (list
-           :height ivy-posframe-height
+           :height (or ivy-posframe-height ivy-height)
            :width ivy-posframe-width
            :min-height (or ivy-posframe-min-height ivy-height)
            :min-width
@@ -303,86 +280,121 @@
                       (max-prompt-col (seq-max (seq-map 'length prompt))))
                  (max (seq-max (seq-map 'length buf-rows))
                       (+ max-prompt-col (length ivy-text) 2)))))))
-  (define-advice ivy-posframe--display (:around (fun &rest args) nxtr/ivy-posframe--display)
-    (let ((ivy-posframe-font (face-attribute 'default :font (selected-frame))))
-      (apply fun args))))
-
-(use-package linum
-  :when (version< emacs-version "26.1")
-  :hook (prog-mode . linum-mode)
-  :bind ([remap goto-line]
-         . (lambda ()
-             (interactive)
-             (let* ((initial-buffer (current-buffer))
-                    (buffer (if (consp current-prefix-arg)
-                                (other-buffer (current-buffer) t)
-                              initial-buffer)))
-               (with-current-buffer buffer
-                 (cond ((or linum-mode
-                            ;; Numeric prefix argument
-                            (and current-prefix-arg (not (consp current-prefix-arg))))
-                        ;; Force `buffer' to be other buffer
-                        (set-buffer initial-buffer)
-                        (call-interactively #'goto-line))
-                       (t (unwind-protect
-                              (let ((linum-format 'dynamic)
-                                    (linum-eager linum-delay))
-                                (linum-mode 1)
-                                ;; Force `buffer' to be other buffer
-                                (set-buffer initial-buffer)
-                                (call-interactively #'goto-line))
-                            (linum-mode -1)))))))))
-
-(use-package lisp-mode
-  :hook ((emacs-lisp-mode lisp-mode)
-         . (lambda ()
-             (add-hook 'after-save-hook 'check-parens nil t)))
   :config
-  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook 'reveal-mode)
-  (defun indent-spaces-mode ()
-    (setq indent-tabs-mode nil))
-  (add-hook 'lisp-interaction-mode-hook #'indent-spaces-mode))
+  (define-advice ivy-posframe--display (:around (fun &rest args))
+    (let ((ivy-posframe-font
+           (face-attribute 'default :font (selected-frame))))
+      (apply fun args)))
+  (ivy-posframe-mode 1))
 
-(use-package lisp-mode
-  :after paredit
-  :bind (:map lisp-interaction-mode-map
-              ("C-S-j" . eval-print-last-sexp)))
+(use-package ivy-rich
+  :after ivy
+  :hook
+  (ivy-mode
+   . (lambda ()
+       (if ivy-mode
+           (ivy-rich-mode 1)
+         (ivy-rich-mode -1))))
+  :config
+  (ivy-rich-mode 1))
 
 (use-package magit
   :defer t
-  :bind (("C-x g"   . magit-status)
-         ("C-x M-g" . magit-dispatch))
+  :hook
+  (magit-section-movement . magit-status-maybe-update-blob-buffer)
+  :bind
+  (("C-x g"   . magit-status)
+   ("C-x M-g" . magit-dispatch))
   :config
-  ;; Window management
-  (setq magit-display-buffer-function
-        'magit-display-buffer-fullframe-status-topleft-v1)
-  ;; Status buffer settings
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
-                          'append)
-  (add-hook 'magit-section-movement-hook 'magit-status-maybe-update-blob-buffer))
+                          'append))
 
 (use-package man
-  :defer t
-  :config (setq Man-width 80))
+  :defer t)
 
 (use-package markdown-mode
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'"       . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+   ("\\.md\\'"       . markdown-mode)
+   ("\\.markdown\\'" . markdown-mode)))
+
+(progn ;     move
+  ;; https://www.emacswiki.org/emacs/MoveLine
+  ;; Modified with numeric prefix arg
+  (defmacro save-column (&rest body)
+    `(let ((column (current-column)))
+       (unwind-protect
+           (progn ,@body)
+         (move-to-column column))))
+  (put 'save-column 'lisp-indent-function 0)
+  (defun move-line-up (n)
+    "Move the current line up by N lines."
+    (interactive "p")
+    (save-column
+      (dotimes (_ n)
+        (transpose-lines 1)
+        (forward-line -2))))
+  (defun move-line-down (n)
+    "Move the current line down by N lines."
+    (interactive "p")
+    (save-column
+      (dotimes (_ n)
+        (forward-line 1)
+        (transpose-lines 1))
+      (forward-line -1)))
+  ;; https://www.emacswiki.org/emacs/MoveRegion
+  ;; Modified to preserve point
+  (defun move-region (start end n)
+    "Move the current region up or down by N lines."
+    (interactive "r\np")
+    (let ((point-at-start (eql start (point)))
+          (line-text (delete-and-extract-region start end)))
+      (forward-line n)
+      (let ((start (point)))
+        (insert line-text)
+        (setq deactivate-mark nil)
+        (set-mark start)
+        (when point-at-start
+          (exchange-point-and-mark)))))
+  (defun move-region-up (start end n)
+    "Move the current line up by N lines."
+    (interactive "r\np")
+    (move-region start end (if (null n) -1 (- n))))
+  (defun move-region-down (start end n)
+    "Move the current line down by N lines."
+    (interactive "r\np")
+    (move-region start end (if (null n) 1 n)))
+  ;; Key bindings for move region/line
+  (defun move-up (n)
+    "Move the current region/line up by N lines."
+    (interactive "p")
+    (if (use-region-p)
+        (unless (region-noncontiguous-p)
+          (move-region-up (region-beginning) (region-end) n))
+      (move-line-up n)))
+  (defun move-down (n)
+    "Move the current region/line down by N lines."
+    (interactive "p")
+    (if (use-region-p)
+        (unless (region-noncontiguous-p)
+          (move-region-down (region-beginning) (region-end) n))
+      (move-line-down n)))
+  (global-set-key (kbd "C-S-p") 'move-up)
+  (global-set-key (kbd "C-S-n") 'move-down))
 
 (use-package multiple-cursors
-  :bind (("M-RET"         . mc/edit-lines)
-         ("C-<"           . mc/mark-previous-like-this)
-         ("C->"           . mc/mark-next-like-this)
-         ("C-M-<"         . mc/unmark-next-like-this)
-         ("C-M->"         . mc/unmark-previous-like-this)
-         ("C-c C-<"       . mc/mark-all-like-this)
-         ("C-S-SPC"       . mc/toggle-cursor-at-point)
-         ("<C-S-return>"  . multiple-cursors-mode)
-         ("C-S-<mouse-1>" . 'mc/add-cursor-on-click))
+  :bind
+  (("M-RET"         . mc/edit-lines)
+   ("C-<"           . mc/mark-previous-like-this)
+   ("C->"           . mc/mark-next-like-this)
+   ("C-M-<"         . mc/unmark-next-like-this)
+   ("C-M->"         . mc/unmark-previous-like-this)
+   ("C-c C-<"       . mc/mark-all-like-this)
+   ("C-S-SPC"       . mc/toggle-cursor-at-point)
+   ("<C-S-return>"  . multiple-cursors-mode)
+   ("C-S-<mouse-1>" . mc/add-cursor-on-click))
   :config
   ;; https://stackoverflow.com/questions/39882624/setting-arbitrary-cursor-positions-with-multiple-cursors-in-emacs
   (defun mc/toggle-cursor-at-point ()
@@ -403,108 +415,67 @@
   (require 'recentf)
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
-  (setq delete-old-versions t
-        kept-new-versions 6
-        kept-old-versions 2
-        version-control t)
   (setq backup-directory-alist
         `((".*" . ,(no-littering-expand-var-file-name "backup/"))))
   (setq auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-  (setq create-lockfiles nil))
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
 (use-package paredit
-  :hook ((emacs-lisp-mode
-          ielm-mode
-          lisp-mode
-          eval-expression-minibuffer-setup) . paredit-mode))
+  :hook
+  (eval-expression-minibuffer-setup . paredit-mode)
+  :bind
+  (:map lisp-interaction-mode-map
+        ("C-S-j" . eval-print-last-sexp)))
 
-(use-package paren
-  :config (show-paren-mode))
-
-(use-package paren-face
-  :config (global-paren-face-mode))
+(use-package paren-face)
 
 (use-package pdf-tools
   :defer t
-  :init (pdf-tools-install))
+  :init
+  (pdf-tools-install))
 
 (use-package pdf-view
   :after pdf-tools
-  :bind (:map pdf-view-mode-map
-              ("C-r" . isearch-backward)
-              ("C-s" . isearch-forward))
-  :config (setq pdf-view-use-unicode-ligther nil)
-  :hook (pdf-view-mode
-         . (lambda ()
-             (let ((oldmap (cdr (assoc 'ivy-mode minor-mode-map-alist)))
-                   (newmap (make-sparse-keymap)))
-               (set-keymap-parent newmap oldmap)
-               (define-key newmap (kbd "C-r") nil)
-               (define-key newmap (kbd "C-s") nil)
-               (push `(ivy-mode . ,newmap) minor-mode-overriding-map-alist)))))
-
-(use-package prog-mode
-  :config (global-prettify-symbols-mode)
-  (defun indicate-buffer-boundaries-left ()
-    (setq indicate-buffer-boundaries 'left))
-  (add-hook 'prog-mode-hook #'indicate-buffer-boundaries-left))
+  :bind
+  (:map pdf-view-mode-map
+        ("C-r" . isearch-backward)
+        ("C-s" . isearch-forward))
+  :hook
+  (pdf-view-mode
+   . (lambda ()
+       (let ((oldmap (cdr (assoc 'ivy-mode minor-mode-map-alist)))
+             (newmap (make-sparse-keymap)))
+         (set-keymap-parent newmap oldmap)
+         (define-key newmap (kbd "C-r") nil)
+         (define-key newmap (kbd "C-s") nil)
+         (push `(ivy-mode . ,newmap) minor-mode-overriding-map-alist)))))
 
 (use-package recentf
   :demand t
-  :config (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
-
-(use-package savehist
-  :config (savehist-mode))
-
-(use-package saveplace
-  :when (version< "25" emacs-version)
-  :config (save-place-mode))
-
-(use-package shell
-  :defer t
-  :bind ("C-x M-m" . shell)
   :config
-  (require 'with-editor)
-  (add-hook 'shell-mode-hook 'with-editor-export-editor))
-
-(use-package simple
-  :config (column-number-mode))
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
 (use-package smex)
 
 (use-package swiper
-  :after ivy
   :config
-  (define-key ivy-mode-map (kbd "C-s")
-    (defalias (make-symbol "swiper-or-swiper-all")
-      ;; Wrapped with `defalias' and uninterned SYMBOL so
-      ;; `describe-key' displays command as a proper symbol
-      ;; instead of byte-codes
-      (lambda ()
-        "Runs the command swiper.
-With a prefix argument, run the command swiper-all."
-        (interactive)
-        (if current-prefix-arg
-            (swiper-all)
-          (swiper-isearch)))))
-  (define-key ivy-mode-map (kbd "C-r")
-    (lookup-key ivy-mode-map (kbd "C-s"))))
+  (global-set-key (kbd "C-s")
+                  (lambda ()
+                    "Runs the command `swiper-isearch'.
 
-(use-package term
-  :defer t
-  :config
-  (require 'with-editor)
-  (add-hook 'term-exec-hook 'with-editor-export-editor))
+With a prefix argument, run the command `swiper-all'."
+                    (interactive)
+                    (if current-prefix-arg
+                        (swiper-all)
+                      (swiper-isearch))))
+  (global-set-key (kbd "C-r") (global-key-binding (kbd "C-s"))))
 
 (use-package smerge-mode
   :defer t
-  :config (when (>= emacs-major-version 27)
-            (set-face-attribute 'smerge-refined-removed nil :extend t)
-            (set-face-attribute 'smerge-refined-added   nil :extend t)))
-
-(progn ;    `text-mode'
-  (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
+  :config
+  (when (>= emacs-major-version 27)
+    (set-face-attribute 'smerge-refined-removed nil :extend t)
+    (set-face-attribute 'smerge-refined-added   nil :extend t)))
 
 (progn ;     themes
   (defadvice load-theme (before theme-dont-propagate activate)
@@ -522,27 +493,38 @@ With a prefix argument, run the command swiper-all."
                                      vc-ignore-dir-regexp
                                      tramp-file-name-regexp)))
 
-(use-package undo-tree
-  :config (global-undo-tree-mode))
+(use-package undo-tree)
+
+(progn ;     unfill
+  ;; https://www.emacswiki.org/emacs/UnfillParagraph
+  ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
+  (defun unfill-paragraph (&optional region)
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive (progn (barf-if-buffer-read-only) '(t)))
+    (let ((fill-column (point-max))
+          ;; This would override `fill-column' if it's an integer.
+          (emacs-lisp-docstring-fill-column t))
+      (fill-paragraph nil region))))
 
 (use-package vterm
   :defer t
+  :bind
+  ("C-x M-m" . vterm)
   :config
   (require 'with-editor)
   (add-hook 'vterm-mode-hook 'with-editor-export-editor))
 
 (use-package which-key
-  :config (which-key-mode))
+  :config
+  (which-key-mode))
 
 (use-package whitespace
-  :hook ((prog-mode . whitespace-mode)
-         (nxml-mode . whitespace-mode))
-  :config (setq whitespace-style '(face tabs empty trailing lines-tail)))
+  :hook
+  (nxml-mode . whitespace-mode))
 
 (use-package ws-butler
-  :init
-  (add-hook 'prog-mode-hook #'ws-butler-mode)
-  (add-hook 'nxml-mode-hook #'ws-butler-mode))
+  :hook
+  (nxml-mode . ws-butler-mode))
 
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file

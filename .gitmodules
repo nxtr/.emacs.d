@@ -154,3 +154,6 @@
 [submodule "ws-butler"]
 	path = lib/ws-butler
 	url = git@github.com:lewang/ws-butler.git
+[submodule "zones"]
+	path = lib/zones
+	url = git@github.com:emacsmirror/zones.git
