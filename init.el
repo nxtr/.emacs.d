@@ -125,6 +125,8 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package dash)
 
+(use-package eieio)
+
 (use-package diff-hl)
 
 (use-package diff-mode
