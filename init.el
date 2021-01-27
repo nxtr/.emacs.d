@@ -14,9 +14,9 @@
     ;; (package-initialize)
     (load-file (expand-file-name "early-init.el" user-emacs-directory))))
 
-(progn ;    `borg'
+(eval-and-compile ; `borg'
   (add-to-list 'load-path (expand-file-name "lib/borg" user-emacs-directory))
-  (require  'borg)
+  (require 'borg)
   (borg-initialize))
 
 (progn ;    `use-package'
