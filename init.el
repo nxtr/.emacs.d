@@ -306,9 +306,6 @@ Scope will be opposite to `frame'/`global'."
   :defer t
   :hook
   (magit-section-movement . magit-status-maybe-update-blob-buffer)
-  :bind
-  (("C-x g"   . magit-status)
-   ("C-x M-g" . magit-dispatch))
   :config
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
