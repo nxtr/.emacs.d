@@ -38,6 +38,9 @@
 [submodule "disable-mouse"]
 	path = lib/disable-mouse
 	url = git@github.com:purcell/disable-mouse.git
+[submodule "dumb-jump"]
+	path = lib/dumb-jump
+	url = git@github.com:jacktasia/dumb-jump.git
 [submodule "emacsql"]
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
@@ -120,6 +123,9 @@
 [submodule "restclient"]
 	path = lib/restclient
 	url = git@github.com:pashky/restclient.el.git
+[submodule "s"]
+	path = lib/s
+	url = git@github.com:magnars/s.el.git
 [submodule "smex"]
 	path = lib/smex
 	url = git@github.com:nonsequitur/smex.git

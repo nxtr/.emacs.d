@@ -164,6 +164,10 @@ Scope will be opposite to `frame'/`global'."
                  (call-interactively #'goto-line))
              (setq display-line-numbers numbers)))))))
 
+(use-package dumb-jump
+  :config
+  (add-hook 'xref-backend-functions 'dumb-jump-xref-activate))
+
 (use-package eldoc
   :when (version< "25" emacs-version))
 
