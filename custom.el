@@ -90,6 +90,8 @@
  '(visible-bell t)
  '(vterm-always-compile-module t)
  '(vterm-buffer-name-string "vterm %s")
+ '(vterm-keymap-exceptions
+   '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-v" "M-v" "C-y" "M-y" "M-O"))
  '(vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
  '(which-key-mode t)
  '(whitespace-style '(face trailing tabs lines-tail empty))
