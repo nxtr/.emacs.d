@@ -516,7 +516,29 @@ With a prefix argument, run the command `swiper-all'."
   ("C-x M-m" . vterm)
   :config
   (require 'with-editor)
-  (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+  (add-hook 'vterm-mode-hook 'with-editor-export-editor)
+  (define-advice counsel-yank-pop (:around (fun &rest args))
+    (if (equal major-mode 'vterm-mode)
+        (let ((counsel-yank-pop-action-fun (symbol-function
+                                            'counsel-yank-pop-action))
+              (last-command-yank-p (eq last-command 'yank)))
+          (cl-letf (((symbol-function 'counsel-yank-pop-action)
+                     (lambda (s)
+                       (let ((inhibit-read-only t)
+                             (last-command (if (memq last-command
+                                                     '(counsel-yank-pop
+                                                       ivy-previous-line
+                                                       ivy-next-line))
+                                               'yank
+                                             last-command))
+                             (yank-undo-function (when last-command-yank-p
+                                                   (lambda (_start _end)
+                                                     (vterm-undo)))))
+                         (cl-letf (((symbol-function 'insert-for-yank)
+                                    'vterm-insert))
+                           (funcall counsel-yank-pop-action-fun s))))))
+            (apply fun args)))
+      (apply fun args))))
 
 (use-package which-key
   :config
