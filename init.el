@@ -41,6 +41,7 @@
     (load custom-file)))
 
 (use-package server
+  :commands (server-running-p)
   :config
   (or (server-running-p) (server-mode)))
 
@@ -163,7 +164,7 @@ Scope will be opposite to `frame'/`global'."
                  (setq display-line-numbers t)
                  ;; Force `buffer' to be other buffer
                  (set-buffer initial-buffer)
-                 (call-interactively #'goto-line))
+                 (call-interactively 'goto-line))
              (setq display-line-numbers numbers)))))))
 
 (use-package dumb-jump
@@ -482,7 +483,7 @@ With a prefix argument, run the command `swiper-all'."
 
 (progn ;     themes
   (defadvice load-theme (before theme-dont-propagate activate)
-    (mapc #'disable-theme custom-enabled-themes)))
+    (mapc 'disable-theme custom-enabled-themes)))
 
 (use-package tramp
   :defer t
