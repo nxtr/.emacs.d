@@ -454,6 +454,8 @@ Scope will be opposite to `frame'/`global'."
          (define-key newmap (kbd "C-s") nil)
          (push `(ivy-mode . ,newmap) minor-mode-overriding-map-alist)))))
 
+(use-package queue)
+
 (use-package recentf
   :demand t
   :config
