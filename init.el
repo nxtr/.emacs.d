@@ -543,6 +543,10 @@ With a prefix argument, run the command `swiper-all'."
       (apply fun args))))
 
 (use-package which-key
+  :bind
+  (("C-h b"     . #'which-key-show-full-major-mode)
+   ("C-h C-b"   . #'which-key-show-full-minor-mode-keymap)
+   ("C-h C-M-b" . #'which-key-show-top-level))
   :config
   (which-key-mode))
 
