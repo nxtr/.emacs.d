@@ -61,6 +61,14 @@
   (("M-o" . ace-window)
    ("M-O"
     . (lambda (&rest args)
+        "Runs an alternative command `ace-window' that always dispatch everywhere."
+        (interactive (advice-eval-interactive-spec
+                      (cadr (interactive-form 'ace-window))))
+        (let ((aw-dispatch-always t)
+              aw-ignore-on)
+          (apply 'ace-window args))))
+   ("C-M-o"
+    . (lambda (&rest args)
         "Runs an alternative command `ace-window' that always dispatch everywhere.
 
 Scope will be opposite to `frame'/`global'."
@@ -70,14 +78,6 @@ Scope will be opposite to `frame'/`global'."
                             'global
                           'frame))
               (aw-dispatch-always t)
-              aw-ignore-on)
-          (apply 'ace-window args))))
-   ("C-M-o"
-    . (lambda (&rest args)
-        "Runs an alternative command `ace-window' that always dispatch everywhere."
-        (interactive (advice-eval-interactive-spec
-                      (cadr (interactive-form 'ace-window))))
-        (let ((aw-dispatch-always t)
               aw-ignore-on)
           (apply 'ace-window args))))))
 
