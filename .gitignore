@@ -2,7 +2,6 @@
 *.elc
 /.cask
 /.hive-maint
-/custom.el
 /elpa
 /eshell
 /var
