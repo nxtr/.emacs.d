@@ -11,7 +11,7 @@
  '(auto-compile-update-autoloads t)
  '(avy-background t)
  '(aw-ignored-buffers
-   '("*Calc Trail*" " *LV*" "*Help*" "*Messages*" "*Warnings*"))
+   '("*Calc Trail*" " *LV*" "*Message*" "*Messages*" "*Warnings*"))
  '(aw-keys '(97 115 100 102 103 104 106 107 108))
  '(aw-scope 'frame)
  '(column-number-mode t)
@@ -19,6 +19,7 @@
  '(company-show-numbers t)
  '(company-tooltip-flip-when-above t)
  '(completion-styles '(basic partial-completion emacs22 initials))
+ '(confirm-kill-emacs 'y-or-n-p)
  '(create-lockfiles nil)
  '(default-text-scale-mode t nil (default-text-scale))
  '(delete-old-versions t)
@@ -67,6 +68,7 @@
  '(magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
  '(magit-post-refresh-hook '(diff-hl-magit-post-refresh))
  '(menu-bar-mode nil)
+ '(native-comp-async-report-warnings-errors 'silent)
  '(pdf-view-use-unicode-ligther nil)
  '(prog-mode-hook
    '((lambda nil
