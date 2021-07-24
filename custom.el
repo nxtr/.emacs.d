@@ -18,7 +18,7 @@
  '(company-minimum-prefix-length 2)
  '(company-show-numbers t)
  '(company-tooltip-flip-when-above t)
- '(completion-styles '(basic partial-completion emacs22 initials))
+ '(completion-styles '(orderless))
  '(confirm-kill-emacs 'y-or-n-p)
  '(create-lockfiles nil)
  '(default-text-scale-mode t nil (default-text-scale))

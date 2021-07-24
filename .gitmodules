@@ -92,6 +92,9 @@
 [submodule "no-littering"]
 	path = lib/no-littering
 	url = git@github.com:emacscollective/no-littering.git
+[submodule "orderless"]
+	path = lib/orderless
+	url = git@github.com:oantolin/orderless.git
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git

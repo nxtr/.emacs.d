@@ -337,6 +337,8 @@ Scope will be opposite to `frame'/`global'."
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
+(use-package orderless)
+
 (use-package paredit
   :hook
   (eval-expression-minibuffer-setup . paredit-mode)
