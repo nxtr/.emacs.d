@@ -87,6 +87,8 @@
  '(use-dialog-box nil)
  '(vc-follow-symlinks t)
  '(version-control t)
+ '(vertico-cycle t)
+ '(vertico-resize t)
  '(visible-bell t)
  '(vterm-always-compile-module t)
  '(vterm-buffer-name-string "vterm %s")

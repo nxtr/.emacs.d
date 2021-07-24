@@ -398,6 +398,10 @@ Scope will be opposite to `frame'/`global'."
           (emacs-lisp-docstring-fill-column t))
       (fill-paragraph nil region))))
 
+(use-package vertico
+  :config
+  (vertico-mode +1))
+
 (use-package vterm
   :defer t
   :bind
