@@ -22,6 +22,9 @@
 [submodule "company-quickhelp"]
 	path = lib/company-quickhelp
 	url = git@github.com:expez/company-quickhelp.git
+[submodule "consult"]
+	path = lib/consult
+	url = git@github.com:minad/consult.git
 [submodule "dash"]
 	path = lib/dash
 	url = git@github.com:magnars/dash.el.git

@@ -101,6 +101,64 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package company-quickhelp)
 
+(use-package consult
+  :bind
+  (("C-c h"    . consult-history)
+   ("C-c m"    . consult-mode-command)
+   ("C-c b"    . consult-bookmark)
+   ("C-c j"    . consult-git-grep)
+   ("C-c K"    . consult-kmacro)
+   ("C-c k"    . consult-ripgrep)
+   ("C-x M-:"  . consult-complex-command)
+   ("C-x b"    . consult-buffer)
+   ("C-x l"    . consult-locate)
+   ("C-x 4 b"  . consult-buffer-other-window)
+   ("C-x 5 b"  . consult-buffer-other-frame)
+   ("M-#"      . consult-register-load)
+   ("M-'"      . consult-register-store)
+   ("C-M-#"    . consult-register)
+   ("M-y"      . consult-yank-pop)
+   ("<help> a" . consult-apropos)
+   ("M-g f"    . consult-flymake)
+   ;; ("M-g g"    . consult-goto-line)
+   ("M-g M-g"  . consult-goto-line)
+   ("M-g o"    . consult-outline)
+   ("M-g m"    . consult-mark)
+   ("M-g k"    . consult-global-mark)
+   ("M-g i"    . consult-imenu)
+   ("M-g I"    . consult-project-imenu)
+   ("M-s f"    . consult-find)
+   ("M-s L"    . consult-locate)
+   ("M-s g"    . consult-grep)
+   ("M-s G"    . consult-git-grep)
+   ("M-s r"    . consult-ripgrep)
+   ("M-s m"    . consult-multi-occur)
+   ("M-s k"    . consult-keep-lines)
+   ("M-s u"    . consult-focus-lines)
+   ("M-s e"    . consult-isearch)
+   :map isearch-mode-map
+   ("M-e"      . consult-isearch)
+   ("M-s e"    . consult-isearch)
+   ("M-s l"    . consult-line))
+  :hook
+  (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (setq register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  :config
+  (consult-customize
+   consult-theme
+   consult-ripgrep
+   consult-git-grep
+   consult-grep
+   consult-bookmark
+   consult-recent-file consult-xref
+   consult--source-file
+   consult--source-project-file
+   consult--source-bookmark
+   :preview-key (kbd "M-.")))
+
 (use-package dash)
 
 (use-package eieio)

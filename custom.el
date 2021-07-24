@@ -20,6 +20,14 @@
  '(company-tooltip-flip-when-above t)
  '(completion-styles '(orderless))
  '(confirm-kill-emacs 'y-or-n-p)
+ '(consult-narrow-key "<")
+ '(consult-project-root-function
+   '(lambda nil
+      (when-let
+          (project
+           (project-current))
+        (car
+         (project-roots project)))))
  '(create-lockfiles nil)
  '(default-text-scale-mode t nil (default-text-scale))
  '(delete-old-versions t)
@@ -75,6 +83,7 @@
    '((lambda nil
        (setq indicate-buffer-boundaries 'left))
      ws-butler-mode whitespace-mode display-line-numbers-mode company-mode))
+ '(register-preview-delay 0)
  '(save-abbrevs 'silently)
  '(save-interprogram-paste-before-kill t)
  '(scroll-bar-mode nil)
@@ -99,7 +108,9 @@
  '(which-key-mode t)
  '(whitespace-style '(face trailing tabs lines-tail empty))
  '(winner-dont-bind-my-keys t)
- '(winner-mode t))
+ '(winner-mode t)
+ '(xref-show-definitions-function 'consult-xref)
+ '(xref-show-xrefs-function 'consult-xref))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
