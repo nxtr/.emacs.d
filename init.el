@@ -226,6 +226,11 @@ Scope will be opposite to `frame'/`global'."
 (use-package man
   :defer t)
 
+(use-package marginalia
+  :bind
+  (:map minibuffer-local-map
+        ("M-A" . marginalia-cycle)))
+
 (use-package markdown-mode
   :mode
   (("README\\.md\\'" . gfm-mode)

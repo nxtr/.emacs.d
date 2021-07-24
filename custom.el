@@ -67,6 +67,7 @@
  '(lisp-mode-hook '(paredit-mode))
  '(magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
  '(magit-post-refresh-hook '(diff-hl-magit-post-refresh))
+ '(marginalia-mode t)
  '(menu-bar-mode nil)
  '(native-comp-async-report-warnings-errors 'silent)
  '(pdf-view-use-unicode-ligther nil)
