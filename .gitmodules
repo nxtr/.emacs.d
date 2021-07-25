@@ -70,15 +70,6 @@
 [submodule "hydra"]
 	path = lib/hydra
 	url = git@github.com:abo-abo/hydra.git
-[submodule "ivy"]
-	path = lib/ivy
-	url = git@github.com:abo-abo/swiper.git
-[submodule "ivy-posframe"]
-	path = lib/ivy-posframe
-	url = git@github.com:tumashu/ivy-posframe.git
-[submodule "ivy-rich"]
-	path = lib/ivy-rich
-	url = git@github.com:Yevgnen/ivy-rich.git
 [submodule "libgit"]
 	path = lib/libgit
 	url = git@github.com:magit/libegit2.git
@@ -131,9 +122,6 @@
 [submodule "s"]
 	path = lib/s
 	url = git@github.com:magnars/s.el.git
-[submodule "smex"]
-	path = lib/smex
-	url = git@github.com:nonsequitur/smex.git
 [submodule "tablist"]
 	path = lib/tablist
 	url = git@github.com:politza/tablist.git

@@ -101,29 +101,6 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package company-quickhelp)
 
-(use-package counsel
-  :after ivy
-  :diminish
-  :hook
-  (ivy-mode
-   . (lambda ()
-       (if ivy-mode
-           (counsel-mode 1)
-         (counsel-mode -1))))
-  :bind
-  (:map counsel-mode-map
-        ("C-c c"  . counsel-compile)
-        ("C-c g"  . counsel-git)
-        ("C-c j"  . counsel-git-grep)
-        ("C-c L"  . counsel-git-log)
-        ("C-c k"  . counsel-rg)
-        ("C-c o"  . counsel-outline)
-        ("C-x l"  . counsel-locate)
-        ("<f1> l" . counsel-find-library)
-        ("C-c J"  . counsel-file-jump)
-        ("C-c f"  . counsel-recentf)
-        ("<f2> u" . counsel-unicode-char)))
-
 (use-package dash)
 
 (use-package eieio)
@@ -235,75 +212,6 @@ Scope will be opposite to `frame'/`global'."
 (use-package imenu
   :bind
   ("M-i" . imenu))
-
-(use-package ivy
-  :demand t
-  :diminish
-  :bind
-  (:map ivy-mode-map
-        ("C-c r"   . ivy-resume)
-        ("C-x B"   . ivy-switch-buffer-other-window)
-        ("C-c v"   . ivy-push-view)
-        ("C-c V"   . ivy-pop-view)
-        ("C-c C-v" . ivy-switch-view))
-  :config
-  (ivy-mode 1))
-
-(use-package ivy-posframe
-  :after ivy
-  :diminish
-  :hook
-  (ivy-mode
-   . (lambda ()
-       (if ivy-mode
-           (ivy-posframe-mode 1)
-         (ivy-posframe-mode -1))))
-  :config
-  (setq ivy-posframe-display-functions-alist
-        '((swiper           . ivy-display-function-fallback)
-          (swiper-all       . ivy-display-function-fallback)
-          (swiper-isearch   . ivy-display-function-fallback)
-          (counsel-rg       . ivy-display-function-fallback)
-          (counsel-git-grep . ivy-display-function-fallback)
-          (counsel-locate   . ivy-display-function-fallback)
-          (t                . ivy-posframe-display-at-point)))
-  (setq ivy-posframe-size-function
-        (lambda ()
-          (list
-           :height (or ivy-posframe-height ivy-height)
-           :width ivy-posframe-width
-           :min-height (or ivy-posframe-min-height ivy-height)
-           :min-width
-           (or ivy-posframe-min-width
-               (let* ((buf-rows (split-string
-                                 (with-current-buffer ivy-posframe-buffer
-                                   (buffer-string))
-                                 "\n"))
-                      (prompt (split-string
-                               (with-temp-buffer
-                                 (ivy--insert-prompt)
-                                 (buffer-string))
-                               "\n"))
-                      (max-prompt-col (seq-max (seq-map 'length prompt))))
-                 (max (seq-max (seq-map 'length buf-rows))
-                      (+ max-prompt-col (length ivy-text) 2)))))))
-  :config
-  (define-advice ivy-posframe--display (:around (fun &rest args))
-    (let ((ivy-posframe-font
-           (face-attribute 'default :font (selected-frame))))
-      (apply fun args)))
-  (ivy-posframe-mode 1))
-
-(use-package ivy-rich
-  :after ivy
-  :hook
-  (ivy-mode
-   . (lambda ()
-       (if ivy-mode
-           (ivy-rich-mode 1)
-         (ivy-rich-mode -1))))
-  :config
-  (ivy-rich-mode 1))
 
 (use-package magit
   :defer t
@@ -438,22 +346,6 @@ Scope will be opposite to `frame'/`global'."
   :init
   (pdf-tools-install))
 
-(use-package pdf-view
-  :after pdf-tools
-  :bind
-  (:map pdf-view-mode-map
-        ("C-r" . isearch-backward)
-        ("C-s" . isearch-forward))
-  :hook
-  (pdf-view-mode
-   . (lambda ()
-       (let ((oldmap (cdr (assoc 'ivy-mode minor-mode-map-alist)))
-             (newmap (make-sparse-keymap)))
-         (set-keymap-parent newmap oldmap)
-         (define-key newmap (kbd "C-r") nil)
-         (define-key newmap (kbd "C-s") nil)
-         (push `(ivy-mode . ,newmap) minor-mode-overriding-map-alist)))))
-
 (use-package queue)
 
 (use-package recentf
@@ -476,21 +368,6 @@ Scope will be opposite to `frame'/`global'."
   (when (>= emacs-major-version 27)
     (set-face-attribute 'smerge-refined-removed nil :extend t)
     (set-face-attribute 'smerge-refined-added   nil :extend t)))
-
-(use-package smex)
-
-(use-package swiper
-  :config
-  (global-set-key (kbd "C-s")
-                  (lambda ()
-                    "Runs the command `swiper-isearch'.
-
-With a prefix argument, run the command `swiper-all'."
-                    (interactive)
-                    (if current-prefix-arg
-                        (swiper-all)
-                      (swiper-isearch))))
-  (global-set-key (kbd "C-r") (global-key-binding (kbd "C-s"))))
 
 (progn ;     themes
   (defadvice load-theme (before theme-dont-propagate activate)
@@ -527,29 +404,7 @@ With a prefix argument, run the command `swiper-all'."
   ("C-x m" . vterm)
   :config
   (require 'with-editor)
-  (add-hook 'vterm-mode-hook 'with-editor-export-editor)
-  (define-advice counsel-yank-pop (:around (fun &rest args))
-    (if (equal major-mode 'vterm-mode)
-        (let ((counsel-yank-pop-action-fun (symbol-function
-                                            'counsel-yank-pop-action))
-              (last-command-yank-p (eq last-command 'yank)))
-          (cl-letf (((symbol-function 'counsel-yank-pop-action)
-                     (lambda (s)
-                       (let ((inhibit-read-only t)
-                             (last-command (if (memq last-command
-                                                     '(counsel-yank-pop
-                                                       ivy-previous-line
-                                                       ivy-next-line))
-                                               'yank
-                                             last-command))
-                             (yank-undo-function (when last-command-yank-p
-                                                   (lambda (_start _end)
-                                                     (vterm-undo)))))
-                         (cl-letf (((symbol-function 'insert-for-yank)
-                                    'vterm-insert))
-                           (funcall counsel-yank-pop-action-fun s))))))
-            (apply fun args)))
-      (apply fun args))))
+  (add-hook 'vterm-mode-hook 'with-editor-export-editor))
 
 (use-package which-key
   :bind
