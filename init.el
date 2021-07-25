@@ -461,6 +461,13 @@ Scope will be opposite to `frame'/`global'."
   :config
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
+(use-package smerge-mode
+  :defer t
+  :config
+  (when (>= emacs-major-version 27)
+    (set-face-attribute 'smerge-refined-removed nil :extend t)
+    (set-face-attribute 'smerge-refined-added   nil :extend t)))
+
 (use-package smex)
 
 (use-package swiper
@@ -475,13 +482,6 @@ With a prefix argument, run the command `swiper-all'."
                         (swiper-all)
                       (swiper-isearch))))
   (global-set-key (kbd "C-r") (global-key-binding (kbd "C-s"))))
-
-(use-package smerge-mode
-  :defer t
-  :config
-  (when (>= emacs-major-version 27)
-    (set-face-attribute 'smerge-refined-removed nil :extend t)
-    (set-face-attribute 'smerge-refined-added   nil :extend t)))
 
 (progn ;     themes
   (defadvice load-theme (before theme-dont-propagate activate)
@@ -548,7 +548,7 @@ With a prefix argument, run the command `swiper-all'."
    ("C-h C-b"   . #'which-key-show-full-minor-mode-keymap)
    ("C-h C-M-b" . #'which-key-show-top-level))
   :config
-  (which-key-mode))
+  (which-key-mode +1))
 
 (use-package whitespace
   :hook
