@@ -461,6 +461,10 @@ Scope will be opposite to `frame'/`global'."
   :config
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
+(use-package saveplace
+  :config
+  (save-place-mode +1))
+
 (use-package savehist
   :config
   (savehist-mode +1))

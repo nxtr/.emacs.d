@@ -76,7 +76,6 @@
      ws-butler-mode whitespace-mode display-line-numbers-mode company-mode))
  '(save-abbrevs 'silently)
  '(save-interprogram-paste-before-kill t)
- '(save-place-mode t)
  '(scroll-bar-mode nil)
  '(set-mark-command-repeat-pop t)
  '(show-paren-mode t)
