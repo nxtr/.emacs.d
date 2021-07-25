@@ -201,7 +201,7 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package eshell
   :bind
-  ("C-x m" . eshell))
+  ("C-x M-m" . eshell))
 
 (use-package exec-path-from-shell
   :config
@@ -515,7 +515,7 @@ With a prefix argument, run the command `swiper-all'."
 (use-package vterm
   :defer t
   :bind
-  ("C-x M-m" . vterm)
+  ("C-x m" . vterm)
   :config
   (require 'with-editor)
   (add-hook 'vterm-mode-hook 'with-editor-export-editor)
