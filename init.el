@@ -293,7 +293,7 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package imenu
   :bind
-  ("M-i" . imenu))
+  ("M-i" . consult-imenu))
 
 (use-package magit
   :defer t
