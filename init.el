@@ -497,7 +497,20 @@ Scope will be opposite to `frame'/`global'."
   ("C-x m" . vterm)
   :config
   (require 'with-editor)
-  (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+  (add-hook 'vterm-mode-hook 'with-editor-export-editor)
+  (define-advice consult-yank-pop (:around (orig-fun &rest args))
+    (interactive "p")
+    (if (equal major-mode 'vterm-mode)
+        (let ((buffer-read-only nil)
+              (yank-undo-function (lambda (_start _end)
+                                    (vterm-undo))))
+          (cl-letf (((symbol-function 'insert-for-yank)
+                     (lambda (str)
+                       (vterm-send-string str t))))
+            (apply orig-fun args)))
+      (when buffer-read-only
+        (barf-if-buffer-read-only))
+      (apply orig-fun args))))
 
 (use-package which-key
   :bind
