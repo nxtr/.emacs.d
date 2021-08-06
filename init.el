@@ -489,6 +489,11 @@ Scope will be opposite to `frame'/`global'."
 
 (use-package vertico
   :config
+  (define-advice vertico--filter-files (:around (orig-fun &rest args))
+    (if current-prefix-arg
+        (let ((completion-ignored-extensions nil))
+          (apply orig-fun args))
+      (apply orig-fun args)))
   (vertico-mode +1))
 
 (use-package vterm
