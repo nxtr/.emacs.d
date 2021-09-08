@@ -86,6 +86,7 @@
 [submodule "magit"]
 	path = lib/magit
 	url = git@github.com:magit/magit.git
+	no-byte-compile = lisp/magit-libgit.el
 	recursive-byte-compile = true
 	info-path = Documentation
 [submodule "markdown-mode"]
