@@ -562,6 +562,8 @@ With a prefix argument, run the command `swiper-all'."
   :defer t
   :config (cl-pushnew 'tramp-own-remote-path tramp-remote-path))
 
+;;; Tequila worms
+
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
