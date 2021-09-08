@@ -25,6 +25,7 @@
 [submodule "dash"]
 	path = lib/dash
 	url = git@github.com:magnars/dash.el.git
+	no-byte-compile = dash-functional.el
 	no-makeinfo = dash-template.texi
 [submodule "default-text-scale"]
 	path = lib/default-text-scale
