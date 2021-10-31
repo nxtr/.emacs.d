@@ -134,6 +134,9 @@
 [submodule "s"]
 	path = lib/s
 	url = git@github.com:magnars/s.el.git
+[submodule "selectrum"]
+	path = lib/selectrum
+	url = git@github.com:raxod502/selectrum.git
 [submodule "tablist"]
 	path = lib/tablist
 	url = git@github.com:politza/tablist.git
