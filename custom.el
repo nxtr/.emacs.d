@@ -16,7 +16,7 @@
  '(aw-scope 'frame)
  '(column-number-mode t)
  '(company-minimum-prefix-length 2)
- '(company-show-numbers t)
+ '(company-show-quick-access t)
  '(company-tooltip-flip-when-above t)
  '(completion-styles '(orderless))
  '(confirm-kill-emacs 'y-or-n-p)
