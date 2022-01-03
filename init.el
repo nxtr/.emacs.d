@@ -285,6 +285,15 @@ Scope will be opposite to `frame'/`global'."
 (use-package help
   :defer t)
 
+(use-package helpful
+  :bind
+  (("C-h f"    . helpful-callable)
+   ("C-h v"    . helpful-variable)
+   ("C-h k"    . helpful-key)
+   ("C-c C-d"  . helpful-at-point)
+   ("C-h F"    . helpful-function)
+   ("C-h C"    . helpful-command)))
+
 (use-package hl-todo)
 
 (use-package ibuffer
