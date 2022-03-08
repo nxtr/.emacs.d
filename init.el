@@ -153,10 +153,11 @@ Scope will be opposite to `frame'/`global'."
    consult-git-grep
    consult-grep
    consult-bookmark
-   consult-recent-file consult-xref
-   consult--source-file
-   consult--source-project-file
+   consult-recent-file
+   consult-xref
    consult--source-bookmark
+   consult--source-recent-file
+   consult--source-project-recent-file
    :preview-key (kbd "M-.")))
 
 (use-package dash)
