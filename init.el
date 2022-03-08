@@ -303,6 +303,20 @@ Scope will be opposite to `frame'/`global'."
   :bind
   ("C-x C-b" . ibuffer))
 
+(use-package ielm
+  :after savehist
+  :config
+  ;; https://emacs.stackexchange.com/questions/4221/remembering-history-between-sessions-in-inferior-emacs-lisp-mode
+  (defvar ielm-comint-input-ring nil)
+  (defun set-ielm-comint-input-ring ()
+    (add-hook 'kill-buffer-hook
+              (lambda ()
+                (setq ielm-comint-input-ring comint-input-ring))
+              nil 'local)
+    (when ielm-comint-input-ring
+      (setq comint-input-ring ielm-comint-input-ring)))
+  (add-to-list 'savehist-additional-variables 'ielm-comint-input-ring))
+
 (use-package imenu
   :bind
   ("M-i" . consult-imenu))

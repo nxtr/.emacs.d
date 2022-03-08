@@ -56,7 +56,7 @@
  '(global-prettify-symbols-mode t)
  '(global-subword-mode t)
  '(global-undo-tree-mode t)
- '(ielm-mode-hook '(paredit-mode))
+ '(ielm-mode-hook '(paredit-mode company-mode set-ielm-comint-input-ring))
  '(imenu-auto-rescan t)
  '(imenu-max-item-length nil)
  '(indent-tabs-mode nil)
