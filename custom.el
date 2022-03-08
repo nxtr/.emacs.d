@@ -94,6 +94,7 @@
  '(text-mode-hook '((lambda nil (setq indicate-buffer-boundaries 'left))))
  '(tool-bar-mode nil)
  '(truncate-lines t)
+ '(undo-tree-enable-undo-in-region t)
  '(use-dialog-box nil)
  '(vc-follow-symlinks t)
  '(version-control t)
