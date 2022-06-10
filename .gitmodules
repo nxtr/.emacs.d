@@ -154,6 +154,7 @@
 	path = lib/selectrum
 	url = git@github.com:raxod502/selectrum.git
 [submodule "sqlite3"]
+	build-step = make
 	path = lib/sqlite3
 	url = git@github.com:pekingduck/emacs-sqlite3-api.git
 [submodule "tablist"]
