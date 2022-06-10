@@ -19,7 +19,7 @@
   (require 'borg)
   (borg-initialize))
 
-(progn ;    `use-package'
+(eval-and-compile ; `use-package'
   (eval-when-compile
     (require 'use-package))
   (require 'diminish)                   ;if you use :diminish
