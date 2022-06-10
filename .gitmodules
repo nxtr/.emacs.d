@@ -55,6 +55,9 @@
 	no-byte-compile = emacsql-pg.el
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
+[submodule "emacsql-sqlite-builtin"]
+	path = lib/emacsql-sqlite-builtin
+	url = git@github.com:emacscollective/emacsql-sqlite-builtin.git
 [submodule "embark"]
 	path = lib/embark
 	url = git@github.com:oantolin/embark.git
@@ -150,6 +153,9 @@
 [submodule "selectrum"]
 	path = lib/selectrum
 	url = git@github.com:raxod502/selectrum.git
+[submodule "sqlite3"]
+	path = lib/sqlite3
+	url = git@github.com:pekingduck/emacs-sqlite3-api.git
 [submodule "tablist"]
 	path = lib/tablist
 	url = git@github.com:politza/tablist.git
