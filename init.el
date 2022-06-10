@@ -30,7 +30,10 @@
 (use-package epkg
   :defer t
   :init
-  (setq epkg-repository (expand-file-name "var/epkgs/" user-emacs-directory)))
+  (setq epkg-repository
+        (expand-file-name "var/epkgs/" user-emacs-directory))
+  (setq epkg-database-connector
+        (if (>= emacs-major-version 29) 'sqlite-builtin 'sqlite-module)))
 
 (use-package custom
   :no-require t
