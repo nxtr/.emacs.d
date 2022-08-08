@@ -162,7 +162,8 @@ Scope will be opposite to `frame'/`global'."
    consult--source-project-recent-file
    :preview-key (kbd "M-.")))
 
-(use-package dash)
+(use-package dash
+  :config (global-dash-fontify-mode))
 
 (use-package eieio)
 
