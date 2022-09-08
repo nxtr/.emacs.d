@@ -20,8 +20,7 @@
   (borg-initialize))
 
 (eval-and-compile ; `use-package'
-  (eval-when-compile
-    (require 'use-package))
+  (require 'use-package)
   (require 'diminish)                   ;if you use :diminish
   (require 'bind-key)                   ;if you use any :bind variant
   (setq use-package-verbose t))
