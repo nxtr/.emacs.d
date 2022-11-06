@@ -15,7 +15,7 @@
 	url = git@github.com:emacscollective/borg.git
 [submodule "closql"]
 	path = lib/closql
-	url = git@github.com:emacscollective/closql.git
+	url = git@github.com:magit/closql.git
 [submodule "company"]
 	path = lib/company
 	url = git@github.com:company-mode/company-mode.git
