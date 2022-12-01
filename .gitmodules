@@ -111,9 +111,6 @@
 [submodule "orderless"]
 	path = lib/orderless
 	url = git@github.com:oantolin/orderless.git
-[submodule "packed"]
-	path = lib/packed
-	url = git@github.com:emacscollective/packed.git
 [submodule "paredit"]
 	path = lib/paredit
 	url = https://mumble.net/~campbell/git/paredit.git
