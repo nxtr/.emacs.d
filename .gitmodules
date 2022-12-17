@@ -92,6 +92,9 @@
 	path = lib/libgit
 	url = git@github.com:magit/libegit2.git
 	build-step = make
+[submodule "llama"]
+	path = lib/llama
+	url = https://git.sr.ht/~tarsius/llama
 [submodule "magit"]
 	no-byte-compile = lisp/magit-libgit.el
 	path = lib/magit
