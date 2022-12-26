@@ -122,7 +122,7 @@
 	url = git@github.com:tarsius/paren-face.git
 [submodule "pdf-tools"]
 	path = lib/pdf-tools
-	url = git@github.com:politza/pdf-tools.git
+	url = git@github.com:vedang/pdf-tools.git
 [submodule "popup"]
 	path = lib/popup
 	url = git@github.com:auto-complete/popup-el.git
