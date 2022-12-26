@@ -147,7 +147,6 @@ Scope will be opposite to `frame'/`global'."
   :init
   (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
   :config
   (consult-customize
    consult-theme
