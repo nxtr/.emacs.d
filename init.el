@@ -512,6 +512,9 @@ Scope will be opposite to `frame'/`global'."
           (emacs-lisp-docstring-fill-column t))
       (fill-paragraph nil region))))
 
+(progn ;     upcase
+  (global-set-key (kbd "M-S-u") 'upcase-char))
+
 (use-package vertico
   :config
   (define-advice vertico--filter-files (:around (orig-fun &rest args))
