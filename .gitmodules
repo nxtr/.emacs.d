@@ -1,6 +1,6 @@
-[borg]
-	pushDefault = locutus
-	collective = emacsg
+[include]
+	path = .gitremotes
+	path = .borgconfig
 [submodule "ace-window"]
 	path = lib/ace-window
 	url = git@github.com:abo-abo/ace-window.git
@@ -29,8 +29,6 @@
 	path = lib/consult
 	url = git@github.com:minad/consult.git
 [submodule "dash"]
-	no-byte-compile = dash-functional.el
-	no-makeinfo = dash-template.texi
 	path = lib/dash
 	url = git@github.com:magnars/dash.el.git
 [submodule "default-text-scale"]
@@ -52,7 +50,6 @@
 	path = lib/elisp-refs
 	url = git@github.com:Wilfred/elisp-refs.git
 [submodule "emacsql"]
-	no-byte-compile = emacsql-pg.el
 	path = lib/emacsql
 	url = git@github.com:magit/emacsql.git
 [submodule "embark"]
@@ -96,7 +93,6 @@
 	path = lib/llama
 	url = https://git.sr.ht/~tarsius/llama
 [submodule "magit"]
-	no-byte-compile = lisp/magit-libgit.el
 	path = lib/magit
 	url = git@github.com:magit/magit.git
 [submodule "marginalia"]
@@ -151,7 +147,6 @@
 	path = lib/selectrum
 	url = git@github.com:raxod502/selectrum.git
 [submodule "sqlite3"]
-	build-step = make
 	path = lib/sqlite3
 	url = git@github.com:pekingduck/emacs-sqlite3-api.git
 [submodule "tablist"]
