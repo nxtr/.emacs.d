@@ -73,7 +73,7 @@
  '(ivy-wrap t)
  '(kept-new-versions 6)
  '(lisp-mode-hook '(paredit-mode))
- '(magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
+ '(magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
  '(magit-post-refresh-hook '(diff-hl-magit-post-refresh))
  '(marginalia-mode t)
  '(menu-bar-mode nil)
