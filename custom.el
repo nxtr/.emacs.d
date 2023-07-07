@@ -11,7 +11,7 @@
  '(auto-compile-update-autoloads t)
  '(avy-background t)
  '(aw-ignored-buffers
-   '("*Calc Trail*" " *LV*" "*Message*" "*Messages*" "*Warnings*"))
+   '("*Calc Trail*" " *LV*" "*Message*" "*Messages*" "*Warnings*" "*Compile-Log*" "*trace-output*"))
  '(aw-keys '(97 115 100 102 103 104 106 107 108))
  '(aw-scope 'frame)
  '(column-number-mode t)
